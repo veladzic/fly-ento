@@ -53,10 +53,21 @@ for g in t['objects']['countries']['geometries']:
     for poly in polys:
         for rg in poly:
             rr=ring(rg)
-            seg=[]
+            # Datumsgrenze: Längengrade fortlaufend machen
+            un=[];prev=None;off=0
             for lo,la in rr:
-                x,y=proj(lo,la); seg.append((x,-y))
-            d+='M'+'L'.join(f'{x*100:.1f},{y*100:.1f}' for x,y in seg)+'Z'
+                if prev is not None:
+                    if lo+off-prev>180: off-=360
+                    elif lo+off-prev<-180: off+=360
+                un.append((lo+off,la)); prev=lo+off
+            lons=[p[0] for p in un]
+            for shift in (0,360,-360):
+                pts=[(lo+shift,la) for lo,la in un]
+                if max(p[0] for p in pts)<-185 or min(p[0] for p in pts)>185: continue
+                seg=[]
+                for lo,la in pts:
+                    x,y=proj(lo,la); seg.append((x,-y))
+                d+='M'+'L'.join(f'{x*100:.1f},{y*100:.1f}' for x,y in seg)+'Z'
     paths.setdefault(r,[]).append((name,d))
     names.setdefault(r,[]).append(name)
 for r,v in names.items(): print(r,len(v),', '.join(v))

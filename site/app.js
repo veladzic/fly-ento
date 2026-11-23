@@ -43,12 +43,12 @@ function pics(g, alt = true) {
 }
 function groupCard(g) {
   const flies = g.flies.join(", ") + (g.flyName && !g.flies.some(f => f.toLowerCase() === g.flyName.toLowerCase()) ? " · Foto: " + g.flyName : "");
-  const search = [g.orderDe, g.de, g.en, g.lat, flies, g.info, g.tip, g.day, g.water].join(" ").toLowerCase();
+  const search = [g.orderDe, g.de, g.en, g.lat, flies, g.info, g.tip, g.day, g.water, ...g.sub.map(s => s.join(" "))].join(" ").toLowerCase();
   return `<article class="group" data-gid="${g.id}" data-search="${esc(search)}">
   ${pics(g)}
   <div class="gbody"><h3>${esc(g.de)}</h3>${nameLines(g)}
   <p>${esc(g.info.length > 150 ? g.info.slice(0, g.info.lastIndexOf(" ", 150)) + " …" : g.info)}</p>
-  <div class="chiprow"><span class="chip mono">Haken ${esc(hookTxt(g))}</span><span class="chip mono act">${esc(g.water)}</span></div>
+  <div class="chiprow"><span class="chip mono">Haken ${esc(hookTxt(g))}</span><span class="chip mono act">${esc(g.water)}</span>${g.sub.length ? `<span class="chip mono">${g.sub.length} Untergruppen</span>` : ""}</div>
   <p class="flies"><b>Muster:</b> ${esc(flies)}</p>
   <button type="button" class="more" data-open="${g.id}">Details &amp; Verbreitung →</button></div></article>`;
 }
@@ -150,6 +150,7 @@ function openGroup(id) {
   <div><p>${esc(g.info)}</p>
    <h4>Fischen mit …</h4><p>${esc(g.tip)}</p>
    <h4>Muster</h4><p>${g.flies.map(esc).join(" · ")}</p>
+   ${g.sub.length ? `<h4>Untergruppen &amp; wichtige Arten</h4><ul class="subs">${g.sub.map(s => `<li><div><i class="mono">${esc(s[0])}</i><b>${esc(s[1])}</b></div><span>${esc(s[2])}</span></li>`).join("")}</ul>` : ""}
    <h4>Saison (Mitteleuropa)</h4>${seasonBar(g)}<p class="hint">Hochsaison: ${esc(peakM.slice(0, 4).join(", "))}${peakM.length > 4 ? " …" : ""}</p>
    <h4>Verbreitung</h4><div class="regbars">${regs}</div><p class="hint">${esc(g.geoNote)}</p>
    <div class="actions"><button class="btn" type="button" data-map="${g.id}">Auf Weltkarte zeigen</button><button class="btn" type="button" data-cal="${g.id}">Im Kalender</button></div></div></div></div>`;
