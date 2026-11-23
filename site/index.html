@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Entomologie für Fliegenfischer – Insekten, Karte, Schlupfkalender</title>
+<meta name="description" content="Interaktive Entomologie für Fliegenfischer: Organigramm der Insekten, Weltkarte der Verbreitung, Schlupfkalender, Lebenszyklen, Bestimmungshilfe, Hakengrößen.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a class="skip" href="#main">Zum Inhalt</a>
+
+<header class="top">
+  <div class="top-in">
+    <a class="brand" href="#start" data-tab="tree"><span class="brand-mark" aria-hidden="true">
+      <svg viewBox="0 0 32 32" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22c6 2 12-1 16-8 2-3 4-4 8-4"/><path d="M20 14c-1-3-3-5-6-6"/><circle cx="22" cy="10" r="1.2" fill="currentColor"/></svg></span>
+      <span class="brand-t"><b>Fly Ento</b><i class="mono">Entomologie für Fliegenfischer</i></span></a>
+    <nav class="tabs" id="tabs" role="tablist" aria-label="Bereiche">
+      <button role="tab" data-tab="tree"   aria-selected="true">Organigramm</button>
+      <button role="tab" data-tab="map"    aria-selected="false">Weltkarte</button>
+      <button role="tab" data-tab="cal"    aria-selected="false">Schlupfkalender</button>
+      <button role="tab" data-tab="life"   aria-selected="false">Lebenszyklen</button>
+      <button role="tab" data-tab="key"    aria-selected="false">Bestimmung</button>
+      <button role="tab" data-tab="prax"   aria-selected="false">Hakengrößen &amp; Praxis</button>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero" id="start">
+  <p class="eyebrow mono">Fly Fishing Entomology</p>
+  <h1>Was frisst die Forelle?</h1>
+  <p class="lead">Die wichtigsten Insekten und Beutetiere am Wasser – mit Hakengrößen, passenden Mustern, Schlupfzeiten und einer Weltkarte, wo welche Gruppe vorkommt.</p>
+  <ul class="stats" id="stats"></ul>
+</section>
+
+<!-- ===== Organigramm ===== -->
+<section class="panel-sec" id="tab-tree" role="tabpanel">
+  <div class="toolbar">
+    <label class="sr" for="q">Suche</label>
+    <input id="q" type="search" placeholder="Suchen: Baetidae, Hopper, Caddis, Salmonfly …" autocomplete="off">
+    <div class="chips" id="branchFilter" role="group" aria-label="Bereich filtern">
+      <button class="chip-btn on" data-f="all">Alle</button>
+      <button class="chip-btn" data-f="water">Wasserinsekten</button>
+      <button class="chip-btn" data-f="land">Landinsekten</button>
+      <button class="chip-btn" data-f="other">Weitere Beute</button>
+    </div>
+    <label class="sel"><span>Aktiv im Monat</span>
+      <select id="monthSel"><option value="">alle</option></select></label>
+    <label class="chk"><input type="checkbox" id="onlyActive"> nur aktive</label>
+    <button class="btn" type="button" id="all">Alle aufklappen</button>
+    <button class="btn" type="button" id="none">Alle zuklappen</button>
+  </div>
+  <details class="howto" open><summary>So liest du die Namen</summary>
+    <div class="howto-in">
+      <div><b>Fettgedruckter Name</b><span>Deutsche Angler-Bezeichnung der Gruppe (z. B. „Kriecher“). Sie beschreibt meist die Lebensweise der Larven.</span></div>
+      <div><b>Familie</b><span>Der wissenschaftliche (lateinische) Name – weltweit eindeutig, z. B. <i>Ephemerellidae</i>.</span></div>
+      <div><b>Englisch</b><span>Der englische Gruppenname, den du in Fliegenbüchern und Shops findest (z. B. „Crawlers“).</span></div>
+      <div><b>Auch bekannt als</b><span>Bekannte Namen einzelner Arten oder Schlupfe. <abbr title="Blue-Winged Olive">BWO</abbr> = Blue-Winged Olive, <abbr title="Pale Morning Dun">PMD</abbr> = Pale Morning Dun, Hendrickson = nordamerikanischer Frühjahrsschlupf.</span></div>
+      <div><b>Haken #14–18</b><span>Hakengröße: je größer die Zahl, desto kleiner der Haken. #16 ist also kleiner als #12.</span></div>
+      <div><b>Dun · Spinner · Emerger</b><span>Dun = frisch geschlüpfte Eintagsfliege, Spinner = ausgewachsene nach der Paarung, Emerger = Insekt beim Schlüpfen im Oberflächenfilm.</span></div>
+    </div></details>
+  <p class="hint" id="treeHint" aria-live="polite"></p>
+  <div class="root"><div class="root-node"><b>Insekten &amp; Beutetiere</b><i class="mono">Insecta · Crustacea · Mollusca</i></div><div class="vline" style="height:32px"></div></div>
+  <div class="branches" id="tree"></div>
+  <p class="empty hidden" id="treeEmpty">Keine Treffer – andere Suche oder Filter probieren.</p>
+</section>
+
+<!-- ===== Karte ===== -->
+<section class="panel-sec hidden" id="tab-map" role="tabpanel">
+  <div class="sec-head"><h2>Wo kommen sie vor?</h2>
+    <p>Verbreitung und Bedeutung für Fliegenfischer je Weltregion (0–3). Gruppe wählen, Region anklicken – oder umgekehrt.</p></div>
+  <div class="map-grid">
+    <div class="map-ctl">
+      <label for="mapSel" class="lbl">Gruppe oder Ordnung</label>
+      <select id="mapSel"></select>
+      <div class="legend" aria-label="Legende">
+        <span>selten / fehlt</span><i class="grad"></i><span>sehr häufig</span>
+      </div>
+      <div id="mapInfo" class="mapinfo" aria-live="polite"></div>
+      <div class="ranks" id="mapRanks"></div>
+    </div>
+    <div class="map-wrap">
+      <svg id="worldmap" viewBox="-275 -150 550 255" role="img" aria-label="Weltkarte mit Verbreitung der gewählten Insektengruppe"></svg>
+      <div class="tip hidden" id="mapTip"></div>
+    </div>
+  </div>
+  <div class="region-detail" id="regionDetail"></div>
+</section>
+
+<!-- ===== Kalender ===== -->
+<section class="panel-sec hidden" id="tab-cal" role="tabpanel">
+  <div class="sec-head"><h2>Schlupfkalender</h2>
+    <p>Wann ist welche Gruppe am Wasser aktiv? Basis: gemäßigte Breiten Mitteleuropas. Für die Südhalbkugel auf „Süd“ umschalten – die Saison verschiebt sich um ein halbes Jahr.</p></div>
+  <div class="toolbar">
+    <div class="chips" id="calHemi" role="group" aria-label="Halbkugel">
+      <button class="chip-btn on" data-h="N">Nordhalbkugel</button>
+      <button class="chip-btn" data-h="S">Südhalbkugel</button>
+    </div>
+    <div class="chips" id="calFilter" role="group" aria-label="Bereich">
+      <button class="chip-btn on" data-f="all">Alle</button>
+      <button class="chip-btn" data-f="water">Wasser</button>
+      <button class="chip-btn" data-f="land">Land</button>
+      <button class="chip-btn" data-f="other">Sonstige</button>
+    </div>
+    <label class="sel"><span>Suche</span><input id="calQ" type="search" placeholder="Gruppe …"></label>
+  </div>
+  <div class="cal-wrap"><table class="cal" id="cal"></table></div>
+  <p class="hint">Dunkler = intensiver. Zeile anklicken für Details. Die aktuelle Monatsspalte ist markiert.</p>
+</section>
+
+<!-- ===== Lebenszyklen ===== -->
+<section class="panel-sec hidden" id="tab-life" role="tabpanel">
+  <div class="sec-head"><h2>Lebenszyklen &amp; Stadien</h2>
+    <p>Welche Stufe will der Fisch gerade? Die richtige Muster-Wahl hängt vom Entwicklungsstadium ab.</p></div>
+  <div class="two-col">
+    <div class="note"><h3>Unvollständige Verwandlung</h3>
+      <p>Eintagsfliegen, Steinfliegen und Libellen entwickeln sich ohne Puppe: Ei → <b>Nymphe</b> → Adult. Bei Eintagsfliegen gibt es zusätzlich das Zwischenstadium <b>Subimago (Dun)</b>.</p></div>
+    <div class="note"><h3>Vollständige Verwandlung</h3>
+      <p>Köcherfliegen, Zuckmücken und Käfer durchlaufen Ei → <b>Larve</b> → <b>Puppe</b> → Adult. Das Puppenstadium ist für den Angler besonders wertvoll: die aufsteigende Puppe ist leichte Beute.</p></div>
+  </div>
+  <div class="life-grid" id="lifeGrid"></div>
+  <h3 class="sub">Erkennungsmerkmale im Vergleich</h3>
+  <div class="cal-wrap"><table class="cmp" id="cmpTable"></table></div>
+</section>
+
+<!-- ===== Bestimmung ===== -->
+<section class="panel-sec hidden" id="tab-key" role="tabpanel">
+  <div class="sec-head"><h2>Bestimmungshilfe</h2>
+    <p>Du hast ein Tier in der Hand oder im Netz – welche Gruppe ist es? Antworte Schritt für Schritt.</p></div>
+  <div class="chips" id="keyMode" role="group" aria-label="Bestimmungsart">
+    <button class="chip-btn on" data-m="adult">Fliegendes Insekt (Adult)</button>
+    <button class="chip-btn" data-m="larva">Larve / Nymphe im Wasser</button>
+  </div>
+  <div class="key-box" id="keyBox"></div>
+</section>
+
+<!-- ===== Praxis ===== -->
+<section class="panel-sec hidden" id="tab-prax" role="tabpanel">
+  <div class="sec-head"><h2>Hakengrößen &amp; Praxis</h2>
+    <p>Von #4 bis #26: Welche Größe passt zu welchem Insekt – und wie liest man das Wasser?</p></div>
+  <div class="hook-tool">
+    <div class="hook-ctl"><label for="hookRange" class="lbl">Hakengröße wählen: <b id="hookVal">#14</b></label>
+      <input id="hookRange" type="range" min="4" max="26" step="2" value="14" aria-describedby="hookInfo">
+      <div id="hookInfo" class="hookinfo"></div></div>
+    <div class="hook-vis" id="hookVis" aria-hidden="true"></div>
+  </div>
+  <h3 class="sub">Hakengrößen-Übersicht</h3>
+  <div class="cal-wrap"><table class="cmp" id="hookTable"></table></div>
+
+  <h3 class="sub">Vorgehen am Wasser</h3>
+  <div class="tips" id="tips"></div>
+
+  <h3 class="sub">Starter-Box: 12 Muster, die fast überall fangen</h3>
+  <div class="starter" id="starter"></div>
+
+  <h3 class="sub">Quellen &amp; Hinweise</h3>
+  <p class="foot">Hakengrößen sind Richtwerte und variieren je nach Gewässer, Art und Saison. Saisonangaben beziehen sich auf gemäßigte Breiten Mitteleuropas und können regional um mehrere Wochen abweichen. Deutsche Gruppennamen sind teils gebräuchliche Angler-Bezeichnungen und keine amtlichen Trivialnamen; maßgeblich sind die wissenschaftlichen Namen. Die Weltkarte zeigt grobe Verbreitung und Fliegenfischer-Relevanz je Region, keine Artverbreitung.<br>
+  Insektenfotos: Wikipedia / Wikimedia Commons (diverse Urheber, Lizenzen siehe Commons) · Musterfotos: Umpqua Feather Merchants · Kartengeometrie: Natural Earth (gemeinfrei) · nur für privaten Gebrauch.</p>
+</section>
+</main>
+
+<footer class="site-foot">Fly Ento – Entomologie für Fliegenfischer. Petri Heil!</footer>
+
+<!-- Detail-Dialog -->
+<div class="dlg hidden" id="dlg" role="dialog" aria-modal="true" aria-labelledby="dlgTitle">
+  <div class="dlg-card">
+    <button class="dlg-x" id="dlgX" aria-label="Schließen">×</button>
+    <div id="dlgBody"></div>
+  </div>
+</div>
+
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Bildansicht"><img alt=""><p></p></div>
+
+<script src="data.js"></script>
+<script src="mapdata.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
