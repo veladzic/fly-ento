@@ -13,6 +13,7 @@ function showTab(id) {
   $$("#tabs button").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === id));
   $$(".panel-sec").forEach(s => s.classList.toggle("hidden", s.id !== "tab-" + id));
   if (id === "map") renderMap();
+  if (window.onTab) window.onTab(id);
   history.replaceState(null, "", "#" + id);
   window.scrollTo({top: 0});
 }
@@ -372,5 +373,5 @@ $("#starter").addEventListener("click", e => { const b = e.target.closest("[data
 
 /* ========== Start ========== */
 const start = location.hash.slice(1);
-if (["tree","map","cal","life","key","prax"].includes(start)) showTab(start);
+if ($$("#tabs button").some(b => b.dataset.tab === start)) showTab(start);
 applyFilters();
