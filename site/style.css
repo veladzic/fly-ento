@@ -477,3 +477,81 @@ abbr{text-decoration:underline dotted;cursor:help}
 
 .jump{display:none}
 @media (max-width:900px){.jump{display:block}#nowSum,#cdOut{scroll-margin-top:120px}}
+
+/* ===================== Phone-Usability ===================== */
+button,.btn,.pill,.chip-btn,.seg button,.opt,.qk,.sf{touch-action:manipulation;-webkit-tap-highlight-color:rgba(30,95,116,.15)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:#fff;border-radius:12px;padding:11px 18px;font-size:14.5px;z-index:70;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;max-width:calc(100vw - 32px);text-align:center}
+.toast.on{opacity:1;transform:translateX(-50%) translateY(0)}
+.subnav{scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.subnav::-webkit-scrollbar{display:none}
+.subnav button{scroll-snap-align:center}
+table.stack td::before{content:attr(data-label)}
+
+@media (max-width:700px){
+  /* Eingabefelder: 16 px verhindert das automatische Zoomen auf dem iPhone */
+  input,select,textarea{font-size:16px!important}
+  .fld input[type=text],.fld input[type=number],.fld input[type=date],.fld select,.fb-row input[type=search],.homesearch input{min-height:48px}
+  .seg button{min-height:46px;font-size:15px}
+  .pill{min-height:40px;padding:0 14px;font-size:14px}
+  .chip-btn{min-height:44px}
+  .btn{min-height:46px}.btn.sm{min-height:40px;min-width:40px}.btn.sm2{min-height:42px}
+  .subnav button{min-height:44px}
+  .toast{bottom:84px}
+  .page-head p{font-size:15px}
+  /* Dialog als Vollbild-Blatt */
+  .dlg{padding:0;align-items:stretch}
+  .dlg-card{border-radius:0;min-height:100%;max-width:none}
+  .dlg-x{position:fixed;top:calc(10px + env(safe-area-inset-top,0px));right:12px;width:46px;height:46px}
+  .dh{padding:calc(18px + env(safe-area-inset-top,0px)) 16px 12px}
+  .dh h2{font-size:24px;margin-right:54px}
+  .db{padding:14px 16px 28px;gap:14px}
+  .rb{grid-template-columns:110px 1fr}
+  /* Filterleisten: Chips scrollen waagerecht */
+  .fb-row .chips{flex-wrap:nowrap;overflow-x:auto;width:100%;padding-bottom:2px;scrollbar-width:none}
+  .fb-row .chips::-webkit-scrollbar{display:none}
+  .chip-btn{white-space:nowrap}
+  .fb-row .grow{display:none}
+  .fb-row input[type=search]{max-width:none}
+  /* Organigramm: Karten einspaltig, Kopfzeile kompakter */
+  .grid{grid-template-columns:1fr}
+  .ohead{min-height:80px;padding:10px 12px 10px 10px}
+  .otext .t{font-size:17px}.otext .d{font-size:13.5px}
+  .oinfo{grid-template-columns:1fr}
+  .opanel{padding:12px}
+  /* Fangbuch: Tabelle als Karten */
+  table.stack thead{display:none}
+  table.stack,table.stack tbody,table.stack tr,table.stack td{display:block;width:100%;min-width:0}
+  table.stack{border:0}
+  table.stack tr{background:#fff;border:1px solid var(--border);border-radius:12px;padding:10px 14px;margin:0 0 8px}
+  table.stack td{border:0;padding:3px 0;display:flex;justify-content:space-between;gap:12px;text-align:right}
+  table.stack td::before{color:var(--muted);font-size:12.5px;text-align:left;flex:none}
+  .cal-wrap:has(table.stack){border:0;background:transparent;overflow:visible}
+  table.cmp{min-width:0}
+  #cmpTable{min-width:560px}
+  /* Kalender */
+  table.cal{min-width:640px}.cal td.name{min-width:150px;padding:6px 8px}.cal td.name small{display:none}
+  .cal td.m{height:34px}
+  /* Karte: nur Zahlen auf der Karte, Namen stehen in der Rangliste */
+  #worldmap text:not(.v){display:none}
+  #worldmap text.v{font-size:13px;stroke-width:3}
+  .map-ctl{padding:12px}
+  .rankrow{min-height:40px}
+  /* Rezepte & Box */
+  .rec-grid,.boxlist,.missing{grid-template-columns:1fr}
+  .rec summary{padding:14px 16px}
+  .boxo summary{min-height:48px}.ck{min-height:40px}
+  .log-stats div{min-width:0;flex:1 1 40%}
+  /* Rangliste „Jetzt am Wasser“: Haken unter dem Namen statt daneben */
+  .rowc summary{padding:12px 12px;gap:10px}
+  .rowc .rh{display:none}
+  .reco{padding:16px}
+  .tiles{grid-template-columns:1fr 1fr}
+  .leader{max-width:none}
+  .hookvis .hk{padding:6px 5px;font-size:11.5px}
+  .starter{grid-template-columns:1fr 1fr}
+  .hero{padding-top:20px}
+  .stats li{min-width:calc(50% - 6px)}
+}
+@media (max-width:380px){.qk{padding:12px}.tiles b{font-size:16px}.tabs button{font-size:12px}}
+
+@media (max-width:700px){.log-stats{gap:6px}.log-stats div{flex:1 1 30%;padding:6px 10px}.log-stats b{font-size:15px;overflow-wrap:anywhere}}

@@ -8,6 +8,14 @@ const BR = {water:"Wasserinsekten", land:"Landinsekten", other:"Weitere Beute"};
 const NOW = new Date().getMonth();
 const curBranch = g => g.branch;
 
+/* ========== Hinweis-Toast ========== */
+let toastT;
+function toast(t) {
+  let el = document.getElementById("toast");
+  if (!el) { el = document.createElement("div"); el.id = "toast"; el.className = "toast"; el.setAttribute("role", "status"); document.body.appendChild(el); }
+  el.textContent = t; el.classList.add("on"); clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove("on"), 2200);
+}
+
 /* ========== Navigation ========== */
 const GROUPS = [
   {k: "water", t: "Am Wasser", short: "Am Wasser", d: "Was fressen die Fische gerade? Bedingungen, Haken, Vorfach und Bestimmung.",
@@ -27,6 +35,7 @@ function showTab(id) {
   const sn = $("#subnav"); sn.classList.toggle("hidden", !g);
   if (g) { lastTab[g.k] = id; sn.innerHTML = g.tabs.map(([i, t]) => `<button role="tab" data-tab="${i}" aria-selected="${i === id}">${esc(t)}</button>`).join(""); }
   $$(".panel-sec").forEach(s => s.classList.toggle("hidden", s.id !== "tab-" + id));
+  const act = sn.querySelector("[aria-selected=true]"); if (act) act.scrollIntoView({inline: "center", block: "nearest"});
   if (id === "map") renderMap();
   if (window.onTab) window.onTab(id);
   history.replaceState(null, "", "#" + id);

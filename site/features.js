@@ -213,15 +213,15 @@ const setSeg = (id, v) => { const inp = document.getElementById(id); inp.value =
       ${miss.length ? `<div class="pillrow">${miss.map(n => `<button class="pill" type="button" data-add="${esc(n)}" title="In die Box legen">+ ${esc(n)}</button>`).join("")}</div>` : ""}</div>`; }).join("") || `<p class="empty">Keine Hauptgruppen in diesem Monat.</p>`;
   }
   $("#boxList").addEventListener("change", e => { const c = e.target.closest("input[data-p]"); if (!c) return; c.checked ? inBox.add(c.dataset.p) : inBox.delete(c.dataset.p); saveBox(); $("#boxCount").textContent = countTxt(); const sm = c.closest("details").querySelector(".count"); const names = [...c.closest(".boxo-in").querySelectorAll("input")]; sm.textContent = `${names.filter(x => x.checked).length}/${names.length}`; drawMissing(); });
-  $("#boxMissing").addEventListener("click", e => { const b = e.target.closest("[data-add]"); if (b) { inBox.add(b.dataset.add); saveBox(); drawBox(); } });
+  $("#boxMissing").addEventListener("click", e => { const b = e.target.closest("[data-add]"); if (b) { inBox.add(b.dataset.add); saveBox(); drawBox(); toast(b.dataset.add + " in die Box gelegt"); } });
   $("#boxQ").addEventListener("input", drawBox);
   $("#boxMonth").addEventListener("change", drawMissing);
   $("#boxView").addEventListener("input", () => { const v = $("#boxView").value; $$(".bx").forEach(p => p.classList.toggle("hidden", p.id !== "bx-" + v)); });
 
-  const msg = t => { $("#logMsg").textContent = t; };
+  const msg = t => { $("#logMsg").textContent = t; toast(t); };
   function drawLog() {
     const rows = [...log].sort((a, b) => b.date.localeCompare(a.date));
-    $("#logTable").innerHTML = rows.length ? `<thead><tr><th>Datum</th><th>Gewässer</th><th>Fisch</th><th>cm</th><th>Muster</th><th>Haken</th><th>°C</th><th>Notiz</th><th></th></tr></thead><tbody>${rows.map(r => `<tr><td>${esc(r.date)}</td><td>${esc(r.water)}</td><td>${esc(r.fish)}</td><td>${esc(r.len || "")}</td><td>${esc(r.fly)}</td><td>${esc(r.hook || "")}</td><td>${esc(r.temp || "")}</td><td>${esc(r.note || "")}</td><td><button class="btn sm" type="button" data-del="${r.id}" aria-label="Eintrag löschen">×</button></td></tr>`).join("")}</tbody>` : `<tbody><tr><td class="hint">Noch keine Einträge. Trage deinen ersten Fang links ein.</td></tr></tbody>`;
+    $("#logTable").classList.add("stack"); $("#logTable").innerHTML = rows.length ? `<thead><tr><th>Datum</th><th>Gewässer</th><th>Fisch</th><th>cm</th><th>Muster</th><th>Haken</th><th>°C</th><th>Notiz</th><th></th></tr></thead><tbody>${rows.map(r => `<tr><td data-label="Datum">${esc(r.date)}</td><td data-label="Gewässer">${esc(r.water)}</td><td data-label="Fisch">${esc(r.fish)}</td><td data-label="Länge">${esc(r.len ? r.len + " cm" : "–")}</td><td data-label="Muster">${esc(r.fly)}</td><td data-label="Haken">${esc(r.hook || "–")}</td><td data-label="Wasser °C">${esc(r.temp || "–")}</td><td data-label="Notiz">${esc(r.note || "–")}</td><td data-label=""><button class="btn sm" type="button" data-del="${r.id}" aria-label="Eintrag löschen">×</button></td></tr>`).join("")}</tbody>` : `<tbody><tr><td class="hint">Noch keine Einträge. Trage deinen ersten Fang links ein.</td></tr></tbody>`;
     const cnt = a => { const m = {}; a.forEach(x => { if (x) m[x] = (m[x] || 0) + 1; }); return Object.entries(m).sort((a, b) => b[1] - a[1])[0]; };
     if (!log.length) { $("#logStats").innerHTML = ""; return; }
     const big = log.filter(r => r.len).sort((a, b) => b.len - a.len)[0], tp = cnt(log.map(r => r.fly)), tw = cnt(log.map(r => r.water)), tm = cnt(log.map(r => MONTHS_LONG[+r.date.slice(5, 7) - 1]));
