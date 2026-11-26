@@ -8,17 +8,46 @@ const BR = {water:"Wasserinsekten", land:"Landinsekten", other:"Weitere Beute"};
 const NOW = new Date().getMonth();
 const curBranch = g => g.branch;
 
-/* ========== Tabs ========== */
+/* ========== Navigation ========== */
+const GROUPS = [
+  {k: "water", t: "Am Wasser", d: "Was fressen die Fische gerade? Bedingungen, Haken, Vorfach und Bestimmung.",
+   tabs: [["now", "Jetzt am Wasser"], ["cond", "Bedingungen & Tipps"], ["tip", "Haken & Vorfach"], ["key", "Bestimmung"]]},
+  {k: "ins", t: "Insekten nachschlagen", d: "Alle Gruppen, Untergruppen, Saison, Verbreitung und Lebenszyklen.",
+   tabs: [["tree", "Organigramm"], ["cal", "Schlupfkalender"], ["map", "Weltkarte"], ["life", "Lebenszyklen"]]},
+  {k: "tie", t: "Binden & Box", d: "Binderezepte, deine Fliegenbox, das Fangbuch und die Starter-Box.",
+   tabs: [["rec", "Binderezepte"], ["box", "Meine Box & Fangbuch"], ["starter", "Starter-Box"]]}
+];
+const TAB_GROUP = {}; GROUPS.forEach(g => g.tabs.forEach(([id]) => TAB_GROUP[id] = g));
+const lastTab = {};
+$("#tabs").innerHTML = GROUPS.map(g => `<button role="tab" data-group="${g.k}" aria-selected="false">${esc(g.t)}</button>`).join("");
 function showTab(id) {
-  $$("#tabs button").forEach(b => b.setAttribute("aria-selected", b.dataset.tab === id));
+  if (!document.getElementById("tab-" + id)) id = "home";
+  const g = TAB_GROUP[id];
+  $$("#tabs button").forEach(b => b.setAttribute("aria-selected", !!g && b.dataset.group === g.k));
+  const sn = $("#subnav"); sn.classList.toggle("hidden", !g);
+  if (g) { lastTab[g.k] = id; sn.innerHTML = g.tabs.map(([i, t]) => `<button role="tab" data-tab="${i}" aria-selected="${i === id}">${esc(t)}</button>`).join(""); }
   $$(".panel-sec").forEach(s => s.classList.toggle("hidden", s.id !== "tab-" + id));
   if (id === "map") renderMap();
   if (window.onTab) window.onTab(id);
   history.replaceState(null, "", "#" + id);
   window.scrollTo({top: 0});
 }
-$("#tabs").addEventListener("click", e => { const b = e.target.closest("button"); if (b) showTab(b.dataset.tab); });
-$(".brand").addEventListener("click", e => { e.preventDefault(); showTab("tree"); });
+$("#tabs").addEventListener("click", e => { const b = e.target.closest("button"); if (b) { const g = GROUPS.find(x => x.k === b.dataset.group); showTab(lastTab[g.k] || g.tabs[0][0]); } });
+$("#subnav").addEventListener("click", e => { const b = e.target.closest("button"); if (b) showTab(b.dataset.tab); });
+document.addEventListener("click", e => { const b = e.target.closest("[data-go]"); if (b) showTab(b.dataset.go); });
+$(".brand").addEventListener("click", e => { e.preventDefault(); showTab("home"); });
+(function stickyOffset() { const set = () => document.documentElement.style.setProperty("--hh", $(".top").offsetHeight + "px"); set(); addEventListener("resize", set); })();
+
+/* ========== Startseite ========== */
+$("#homeCards").innerHTML = GROUPS.map(g => `<article class="hcard ${g.k}"><h2>${esc(g.t)}</h2><p>${esc(g.d)}</p>
+  <div class="pillrow">${g.tabs.map(([id, t]) => `<button type="button" class="pill" data-go="${id}">${esc(t)}</button>`).join("")}</div></article>`).join("");
+$("#homeMonth").textContent = MONTHS_LONG[NOW];
+(function homeActive() {
+  const gs = ALL.filter(g => g.season[NOW] >= 2).sort((a, b) => b.season[NOW] - a.season[NOW] || a.de.localeCompare(b.de, "de")).slice(0, 14);
+  $("#homeActive").innerHTML = gs.map(g => `<button type="button" class="pill l${g.season[NOW]}" data-open="${g.id}" title="${esc(g.lat)} · Haken ${esc(hookTxt(g))}">${esc(g.de)}</button>`).join("");
+})();
+$("#homeActive").addEventListener("click", e => { const b = e.target.closest("[data-open]"); if (b) openGroup(b.dataset.open); });
+$("#homeSearch").addEventListener("submit", e => { e.preventDefault(); const q = $("#homeQ").value; showTab("tree"); $("#q").value = q; $("#q").dispatchEvent(new Event("input", {bubbles: true})); });
 
 /* ========== Stats ========== */
 (function stats() {
@@ -373,5 +402,5 @@ $("#starter").addEventListener("click", e => { const b = e.target.closest("[data
 
 /* ========== Start ========== */
 const start = location.hash.slice(1);
-if ($$("#tabs button").some(b => b.dataset.tab === start)) showTab(start);
+showTab(start || "home");
 applyFilters();

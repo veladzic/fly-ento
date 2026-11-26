@@ -113,6 +113,7 @@ RECIPES.forEach(r => r.groups.forEach(id => (RECIPE_BY_GROUP[id] = RECIPE_BY_GRO
     if (f.r.value) { const geo = g.geo[f.r.value]; if (!geo) return null; s *= geo / 3; if (geo === 3) why.push(["Region", "Schwerpunkt"]); }
     return s > 0 ? {g, s, why} : null;
   }
+  const boxChip = g => { const has = window._boxHas ? g.flies.filter(n => _boxHas(n)) : []; return has.length ? `<p><span class="chip">in deiner Box: ${has.map(esc).join(", ")}</span></p>` : `<p><span class="chip warn">nichts davon in deiner Box</span></p>`; };
   function render() {
     f.tv.textContent = f.temp.value + " °C";
     const res = ALL.map(score).filter(Boolean).sort((a, b) => b.s - a.s).slice(0, 8);
@@ -125,11 +126,12 @@ RECIPES.forEach(r => r.groups.forEach(id => (RECIPE_BY_GROUP[id] = RECIPE_BY_GRO
       return `<article class="now-card"><div class="rk">${i + 1}</div><div><h3>${esc(g.de)} <span class="mono">${esc(g.lat)}</span></h3>
       <div class="rankbar"><i style="width:${Math.max(8, r.s / max * 100)}%"></i></div>
       <div class="chiprow">${r.why.map(w => `<span class="chip">${esc(w[0])}: ${esc(w[1])}</span>`).join("")}</div>
-      <p>Haken <b>${esc(hookTxt(g))}</b> · Tippet ~${xFor(hookMid(g))}X · Muster: ${g.flies.map(esc).join(", ")}</p><p class="tp">${esc(g.tip)}</p>
-      <button class="btn" type="button" data-open="${g.id}">Details &amp; Untergruppen</button></div></article>`; }).join("");
+      <p>Haken <b>${esc(hookTxt(g))}</b> · Tippet ~${xFor(hookMid(g))}X · Muster: ${g.flies.map(esc).join(", ")}</p>${boxChip(g)}<p class="tp">${esc(g.tip)}</p>
+      <div class="pillrow"><button class="btn" type="button" data-open="${g.id}">Details &amp; Untergruppen</button><button class="btn" type="button" data-tipcalc="${hookMid(g) % 2 ? hookMid(g) + 1 : hookMid(g)}">Tippet berechnen</button>${(RECIPE_BY_GROUP[g.id] || []).slice(0, 2).map(r => `<button class="btn" type="button" data-rec="${r.id}">Rezept: ${esc(r.name)}</button>`).join("")}</div></div></article>`; }).join("");
   }
   $("#finder").addEventListener("input", render);
-  $("#nowGrid").addEventListener("click", e => { const b = e.target.closest("[data-open]"); if (b) openGroup(b.dataset.open); });
+  $("#nowGrid").addEventListener("click", e => { const b = e.target.closest("[data-open]"); if (b) return openGroup(b.dataset.open);
+    const t = e.target.closest("[data-tipcalc]"); if (t) { $("#tcHook").value = t.dataset.tipcalc; $("#tcHook").dispatchEvent(new Event("input", {bubbles: true})); showTab("tip"); } });
   window._renderFinder = render; render();
 })();
 
@@ -155,9 +157,10 @@ RECIPES.forEach(r => r.groups.forEach(id => (RECIPE_BY_GROUP[id] = RECIPE_BY_GRO
     const acts = $("#dlgBody .actions"); if (!acts) return;
     acts.insertAdjacentHTML("beforebegin", `<h4>Binderezepte</h4><div class="pillrow">${list.map(r => `<button type="button" class="pill" data-rec="${r.id}">${esc(r.name)}</button>`).join("")}</div>`);
   };
-  $("#dlg").addEventListener("click", e => {
+  document.addEventListener("click", e => {
     const b = e.target.closest("[data-rec]"); if (!b) return;
-    closeDlg(); cur = "Alle"; showTab("rec");
+    if (!$("#dlg").classList.contains("hidden")) closeDlg();
+    cur = "Alle"; draw(); showTab("rec");
     const el = document.getElementById("r-" + b.dataset.rec); if (el) { el.scrollIntoView({block: "start"}); el.classList.add("flash"); setTimeout(() => el.classList.remove("flash"), 1800); }
   });
 })();
@@ -238,6 +241,7 @@ RECIPES.forEach(r => r.groups.forEach(id => (RECIPE_BY_GROUP[id] = RECIPE_BY_GRO
   });
   let clrArm = false;
   $("#logClear").onclick = () => { if (!clrArm) { clrArm = true; $("#logClear").textContent = "Wirklich leeren?"; setTimeout(() => { clrArm = false; $("#logClear").textContent = "Fangbuch leeren"; }, 3000); return; } clrArm = false; $("#logClear").textContent = "Fangbuch leeren"; log = []; saveLog(); drawLog(); msg("Fangbuch geleert."); };
+  window._boxHas = n => inBox.has(n);
   window._drawBox = () => { drawBox(); drawLog(); }; drawBox(); drawLog();
 })();
 
@@ -274,9 +278,13 @@ RECIPES.forEach(r => r.groups.forEach(id => (RECIPE_BY_GROUP[id] = RECIPE_BY_GRO
     const colTxt = {klar: "Klares Wasser: feines Vorfach (0,12–0,14 mm), natürliche Farben und kleinere Muster, vorsichtig anschleichen.", leicht: "Leicht getrübt: etwas größere Muster oder Beadheads, Standardvorfach. Gute Bedingungen für Nymphen.", trueb: "Stark getrübt oder Hochwasser: große, dunkle oder kontrastreiche Muster (Woolly Bugger, San Juan Worm), ruhige Ufernähe, kräftigeres Tippet (ab 0,20 mm). Vorsicht beim Waten."}[color];
     const wxTxt = {sonne: "Hell und sonnig: früh und spät fischen, Schatten nutzen, lange feine Vorfächer; mittags Terrestrials und Tiefwasser-Nymphen.", bedeckt: "Bedeckt: gute Schlupfbedingungen – Eintagsfliegen (besonders Baetis) steigen oft. Trockenfliegen und Emerger probieren.", regen: "Regen/Nieselregen: Baetis-Schlupf wahrscheinlich; Würmer werden ausgeschwemmt, Wurmmuster funktionieren oft.", wind: "Wind: Landinsekten wie Ameisen, Käfer und Hopper am Windufer anbieten; kürzeres, kräftigeres Vorfach."}[wx] || "";
     const act2 = INS.filter(([, a, b]) => t >= a && t <= b).map(([n]) => `<span class="chip">${esc(n)}</span>`).join(" ");
-    $("#cdOut").innerHTML = `<p class="stat ${t >= 20 ? "bad" : t >= 16 ? "warn" : "good"}"><b>Forellenaktivität: ${esc(lbl)}</b> – ${esc(txt)}</p><p><b>Insekten, die bei dieser Temperatur aktiv sind:</b><br>${act2}</p><p>${esc(colTxt)}</p>${wxTxt ? `<p>${esc(wxTxt)}</p>` : ""}<p class="hint">Richtwerte für Bachforelle/Regenbogenforelle; einzelne Gewässer und Arten weichen ab.</p>`;
+    $("#cdOut").innerHTML = `<p class="stat ${t >= 20 ? "bad" : t >= 16 ? "warn" : "good"}"><b>Forellenaktivität: ${esc(lbl)}</b> – ${esc(txt)}</p><p><b>Insekten, die bei dieser Temperatur aktiv sind:</b><br>${act2}</p><p>${esc(colTxt)}</p>${wxTxt ? `<p>${esc(wxTxt)}</p>` : ""}<p class="hint">Richtwerte für Bachforelle/Regenbogenforelle; einzelne Gewässer und Arten weichen ab.</p><button class="btn" type="button" data-go="now">Passende Insekten für diese Temperatur →</button>`;
   }
   $("#condCalc").addEventListener("input", render); render();
+  // Temperatur mit „Jetzt am Wasser“ teilen
+  const FT = $("#fTemp");
+  T.addEventListener("input", () => { if (FT.value !== T.value) { FT.value = T.value; FT.dispatchEvent(new Event("input", {bubbles: true})); } });
+  FT.addEventListener("input", () => { if (T.value !== FT.value) { T.value = FT.value; render(); } });
 })();
 
 /* ---------- Tab-Hook ---------- */

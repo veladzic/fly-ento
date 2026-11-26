@@ -14,33 +14,35 @@
 
 <header class="top">
   <div class="top-in">
-    <a class="brand" href="#start" data-tab="tree"><span class="brand-mark" aria-hidden="true">
+    <a class="brand" href="#home"><span class="brand-mark" aria-hidden="true">
       <svg viewBox="0 0 32 32" width="26" height="26" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 22c6 2 12-1 16-8 2-3 4-4 8-4"/><path d="M20 14c-1-3-3-5-6-6"/><circle cx="22" cy="10" r="1.2" fill="currentColor"/></svg></span>
       <span class="brand-t"><b>Fly Ento</b><i class="mono">Entomologie für Fliegenfischer</i></span></a>
-    <nav class="tabs" id="tabs" role="tablist" aria-label="Bereiche">
-      <button role="tab" data-tab="tree"   aria-selected="true">Organigramm</button>
-      <button role="tab" data-tab="map"    aria-selected="false">Weltkarte</button>
-      <button role="tab" data-tab="now"    aria-selected="false">Jetzt am Wasser</button>
-      <button role="tab" data-tab="cal"    aria-selected="false">Schlupfkalender</button>
-      <button role="tab" data-tab="life"   aria-selected="false">Lebenszyklen</button>
-      <button role="tab" data-tab="key"    aria-selected="false">Bestimmung</button>
-      <button role="tab" data-tab="rec"    aria-selected="false">Binderezepte</button>
-      <button role="tab" data-tab="box"    aria-selected="false">Meine Box</button>
-      <button role="tab" data-tab="prax"   aria-selected="false">Praxis &amp; Rechner</button>
-    </nav>
+    <nav class="tabs" id="tabs" role="tablist" aria-label="Hauptbereiche"></nav>
   </div>
 </header>
+<nav class="subnav hidden" id="subnav" role="tablist" aria-label="Unterbereiche"></nav>
 
 <main id="main">
-<section class="hero" id="start">
-  <p class="eyebrow mono">Fly Fishing Entomology</p>
-  <h1>Was frisst die Forelle?</h1>
-  <p class="lead">Die wichtigsten Insekten und Beutetiere am Wasser – mit Hakengrößen, passenden Mustern, Schlupfzeiten und einer Weltkarte, wo welche Gruppe vorkommt.</p>
+<section class="panel-sec" id="tab-home" role="tabpanel">
+  <div class="hero" id="start">
+    <p class="eyebrow mono">Fly Fishing Entomology</p>
+    <h1>Was frisst die Forelle?</h1>
+    <p class="lead">Insekten, Muster, Saison und Bedingungen an einem Ort: erst nachsehen, was gerade aktiv ist, dann Haken, Vorfach und Fliege wählen.</p>
+    <form class="homesearch" id="homeSearch" role="search">
+      <label class="sr" for="homeQ">Suche</label>
+      <input id="homeQ" type="search" placeholder="Insekt, Muster oder Gruppe suchen: Baetis, Hopper, Elk Hair Caddis …" autocomplete="off">
+      <button class="btn pri" type="submit">Suchen</button>
+    </form>
+  </div>
+  <div class="home-now"><h2>Jetzt aktiv im <span id="homeMonth"></span></h2>
+    <div class="pillrow" id="homeActive"></div>
+    <p class="hint">Hauptzeit in Mitteleuropa. <button class="linkbtn" data-go="now">Mit Wetter, Wassertemperatur und Tageszeit auswerten →</button></p></div>
+  <div class="home-cards" id="homeCards"></div>
   <ul class="stats" id="stats"></ul>
 </section>
 
 <!-- ===== Organigramm ===== -->
-<section class="panel-sec" id="tab-tree" role="tabpanel">
+<section class="panel-sec hidden" id="tab-tree" role="tabpanel">
   <div class="toolbar">
     <label class="sr" for="q">Suche</label>
     <input id="q" type="search" placeholder="Suchen: Baetidae, Hopper, Caddis, Salmonfly …" autocomplete="off">
@@ -200,10 +202,10 @@
   <p class="hint" id="logMsg" aria-live="polite"></p>
 </section>
 
-<!-- ===== Praxis ===== -->
-<section class="panel-sec hidden" id="tab-prax" role="tabpanel">
-  <div class="sec-head"><h2>Praxis &amp; Rechner</h2>
-    <p>Von #4 bis #26: Welche Größe passt zu welchem Insekt – und wie liest man das Wasser?</p></div>
+<!-- ===== Haken & Vorfach ===== -->
+<section class="panel-sec hidden" id="tab-tip" role="tabpanel">
+  <div class="sec-head"><h2>Haken &amp; Vorfach</h2>
+    <p>Hakengröße wählen, passende Tippet-Stärke und Vorfachaufbau berechnen.</p></div>
   <div class="hook-tool">
     <div class="hook-ctl"><label for="hookRange" class="lbl">Hakengröße wählen: <b id="hookVal">#14</b></label>
       <input id="hookRange" type="range" min="4" max="26" step="2" value="14" aria-describedby="hookInfo">
@@ -213,6 +215,8 @@
   <h3 class="sub">Hakengrößen-Übersicht</h3>
   <div class="cal-wrap"><table class="cmp" id="hookTable"></table></div>
 
+  <h3 class="sub">Hakengrößen-Übersicht</h3>
+  <div class="cal-wrap"><table class="cmp" id="hookTable"></table></div>
   <h3 class="sub">Vorfach- &amp; Tippet-Rechner</h3>
   <div class="calc" id="tipCalc">
     <label>Hakengröße #<select id="tcHook"></select></label>
@@ -222,7 +226,13 @@
   </div>
   <div class="cal-wrap"><table class="cmp" id="xTable"></table></div>
 
-  <h3 class="sub">Wassertemperatur &amp; Bedingungen</h3>
+</section>
+
+<!-- ===== Bedingungen & Tipps ===== -->
+<section class="panel-sec hidden" id="tab-cond" role="tabpanel">
+  <div class="sec-head"><h2>Bedingungen &amp; Tipps</h2>
+    <p>Wassertemperatur, Wasserfarbe und Wetter bestimmen, wie und womit du fischst.</p></div>
+  
   <div class="calc" id="condCalc">
     <label class="wide">Wassertemperatur: <b id="cdTempV">12 °C</b><input type="range" id="cdTemp" min="0" max="26" step="1" value="12"></label>
     <label>Wasserfarbe<select id="cdColor"><option value="klar">klar</option><option value="leicht">leicht getrübt</option><option value="trueb">stark getrübt / Hochwasser</option></select></label>
@@ -230,19 +240,23 @@
     <div class="calc-out" id="cdOut" aria-live="polite"></div>
   </div>
 
-  <h3 class="sub">Vorgehen am Wasser</h3>
+  <h3 class="sub">Vorgehen am Wasser: 8 Grundregeln</h3>
   <div class="tips" id="tips"></div>
 
-  <h3 class="sub">Starter-Box: 12 Muster, die fast überall fangen</h3>
+</section>
+
+<!-- ===== Starter-Box ===== -->
+<section class="panel-sec hidden" id="tab-starter" role="tabpanel">
+  <div class="sec-head"><h2>Starter-Box</h2>
+    <p>12 Muster, die an fast jedem Wasser etwas fangen. Klick auf ein Muster zeigt die passende Gruppe; im Reiter „Binderezepte“ findest du die Rezepte.</p></div>
+  
   <div class="starter" id="starter"></div>
 
-  <h3 class="sub">Quellen &amp; Hinweise</h3>
-  <p class="foot">Hakengrößen sind Richtwerte und variieren je nach Gewässer, Art und Saison. Saisonangaben beziehen sich auf gemäßigte Breiten Mitteleuropas und können regional um mehrere Wochen abweichen. Deutsche Gruppennamen sind teils gebräuchliche Angler-Bezeichnungen und keine amtlichen Trivialnamen; maßgeblich sind die wissenschaftlichen Namen. Die Weltkarte zeigt grobe Verbreitung und Fliegenfischer-Relevanz je Region, keine Artverbreitung.<br>
-  Insektenfotos: Wikipedia / Wikimedia Commons (diverse Urheber, Lizenzen siehe Commons) · Musterfotos: Umpqua Feather Merchants · Kartengeometrie: Natural Earth (gemeinfrei) · nur für privaten Gebrauch.</p>
 </section>
 </main>
 
-<footer class="site-foot">Fly Ento – Entomologie für Fliegenfischer. Petri Heil!</footer>
+<footer class="site-foot"><details><summary>Quellen &amp; Hinweise</summary><p class="foot">Hakengrößen sind Richtwerte und variieren je nach Gewässer, Art und Saison. Saisonangaben beziehen sich auf gemäßigte Breiten Mitteleuropas und können regional um mehrere Wochen abweichen. Deutsche Gruppennamen sind teils gebräuchliche Angler-Bezeichnungen und keine amtlichen Trivialnamen; maßgeblich sind die wissenschaftlichen Namen. Die Weltkarte zeigt grobe Verbreitung und Fliegenfischer-Relevanz je Region, keine Artverbreitung.<br>
+  Insektenfotos: Wikipedia / Wikimedia Commons (diverse Urheber, Lizenzen siehe Commons) · Musterfotos: Umpqua Feather Merchants · Kartengeometrie: Natural Earth (gemeinfrei) · nur für privaten Gebrauch.</p></details><p>Fly Ento – Entomologie für Fliegenfischer. Petri Heil!</p></footer>
 
 <!-- Detail-Dialog -->
 <div class="dlg hidden" id="dlg" role="dialog" aria-modal="true" aria-labelledby="dlgTitle">
