@@ -26,6 +26,7 @@ jobs:
         run: |
           node --check site/data.js
           node --check site/data_extra.js
+          node --check site/subphotos.js
           node --check site/app.js
           node --check site/features.js
           node --check site/deep.js

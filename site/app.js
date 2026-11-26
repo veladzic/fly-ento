@@ -161,10 +161,19 @@ $("#tree").addEventListener("click", e => {
   const f = e.target.closest("figure"); if (f) lightbox(f);
 });
 
+
+/* Untergruppen-Eintrag mit Foto (Wikipedia/Commons) */
+const subLi = s => { const p = typeof SUBPHOTO !== "undefined" ? SUBPHOTO[s[0]] : null;
+  return `<li${p ? ' class="has-pic"' : ""}>${p ? `<figure class="sfig"><img loading="lazy" src="${photo(p.f)}" alt="${esc(s[0])}" data-credit="${esc(p.p || "")}"></figure>` : ""}<div class="sbody"><div><i class="mono">${esc(s[0])}</i><b>${esc(s[1])}</b></div><span>${esc(s[2])}</span></div></li>`; };
+
 /* ========== Dialog ========== */
 function lightbox(fig) {
   const i = $("img", fig), lb = $("#lb");
-  $("img", lb).src = i.src; $("img", lb).alt = i.alt; $("p", lb).textContent = i.alt; lb.classList.add("on");
+  $("img", lb).src = i.src; $("img", lb).alt = i.alt;
+  const cap = $("p", lb), cr = i.dataset.credit;
+  cap.textContent = i.alt;
+  if (cr) { cap.append(" · Foto: "); const l = document.createElement("a"); l.href = cr; l.target = "_blank"; l.rel = "noopener"; l.textContent = "Wikipedia / Commons"; l.style.color = "#fff"; l.addEventListener("click", ev => ev.stopPropagation()); cap.appendChild(l); }
+  lb.classList.add("on");
 }
 $("#lb").addEventListener("click", () => $("#lb").classList.remove("on"));
 function seasonBar(g) {
@@ -189,7 +198,7 @@ function openGroup(id) {
   <div><p>${esc(g.info)}</p>
    <h4>Fischen mit …</h4><p>${esc(g.tip)}</p>
    <h4>Muster</h4><p>${g.flies.map(esc).join(" · ")}</p>
-   ${g.sub.length ? `<h4>Untergruppen &amp; wichtige Arten</h4><ul class="subs">${g.sub.map(s => `<li><div><i class="mono">${esc(s[0])}</i><b>${esc(s[1])}</b></div><span>${esc(s[2])}</span></li>`).join("")}</ul>` : ""}
+   ${g.sub.length ? `<h4>Untergruppen &amp; wichtige Arten</h4><ul class="subs">${g.sub.map(subLi).join("")}</ul>` : ""}
    <h4>Saison (Mitteleuropa)</h4>${seasonBar(g)}<p class="hint">Hochsaison: ${esc(peakM.slice(0, 4).join(", "))}${peakM.length > 4 ? " …" : ""}</p>
    <h4>Verbreitung</h4><div class="regbars">${regs}</div><p class="hint">${esc(g.geoNote)}</p>
    <div class="actions"><button class="btn" type="button" data-map="${g.id}">Auf Weltkarte zeigen</button><button class="btn" type="button" data-cal="${g.id}">Im Kalender</button></div></div></div></div>`;

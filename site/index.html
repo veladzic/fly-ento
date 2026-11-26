@@ -224,14 +224,19 @@
 
 <!-- ===== Haken & Vorfach ===== -->
 <section class="panel-sec hidden" id="tab-tip" role="tabpanel">
-  <div class="page-head"><h2>Haken &amp; Vorfach</h2><p>Hakengröße wählen – Tippet, Vorfachaufbau und passende Gruppen siehst du sofort.</p></div>
+  <div class="page-head"><h2>Haken &amp; Vorfach</h2><p>Hakengröße und Vorfach-Typ wählen: Tippet, Aufbau, Längen und Material siehst du sofort.</p></div>
   <div class="tool-grid">
     <div class="panel" id="tipCalc">
       <div class="panel-h"><h3>Eingabe</h3></div>
       <div class="fld"><span class="fl">Hakengröße <b id="hookVal">#14</b></span>
         <input type="range" id="tcHook" min="4" max="26" step="2" value="14" aria-label="Hakengröße"><div class="hookvis" id="hookVis" aria-label="Größen"></div></div>
-      <div class="fld"><span class="fl">Vorfachlänge <b id="tcLenV">2,7 m</b></span><input type="range" id="tcLen" min="1.5" max="5.5" step="0.1" value="2.7" aria-label="Vorfachlänge"></div>
-      <div class="fld"><span class="fl">Material</span>
+      <div class="fld"><span class="fl">Vorfach-Typ</span>
+        <div class="seg" data-input="leaderType"><button type="button" data-v="dry" class="on">Trockenfliege</button><button type="button" data-v="ind">Indikator</button><button type="button" data-v="euro">Euronymphe</button></div><input type="hidden" id="leaderType" value="dry"></div>
+      <div class="fld" id="fldLen"><span class="fl">Vorfachlänge <b id="tcLenV">2,7 m</b></span><input type="range" id="tcLen" min="1.5" max="5.5" step="0.1" value="2.7" aria-label="Vorfachlänge"></div>
+      <div class="fld hidden" id="fldDepth"><span class="fl">Wassertiefe <b id="tcDepthV">0,8 m</b></span><input type="range" id="tcDepth" min="0.2" max="3" step="0.1" value="0.8" aria-label="Wassertiefe"></div>
+      <div class="fld hidden" id="fldFlies"><span class="fl">Anzahl Fliegen</span>
+        <div class="seg" data-input="tcFlies"><button type="button" data-v="1" class="on">1</button><button type="button" data-v="2">2</button><button type="button" data-v="3">3</button></div><input type="hidden" id="tcFlies" value="1"></div>
+      <div class="fld"><span class="fl">Material Tippet</span>
         <div class="seg" data-input="tcMat"><button type="button" data-v="ny" class="on">Nylon</button><button type="button" data-v="fc">Fluorocarbon</button></div><input type="hidden" id="tcMat" value="ny"></div>
     </div>
     <div class="result"><div class="tiles" id="tcTiles"></div><div id="leaderSvg"></div><div id="tcOut"></div></div>
@@ -286,6 +291,7 @@
 
 <script src="data.js"></script>
 <script src="data_extra.js"></script>
+<script src="subphotos.js"></script>
 <script src="mapdata.js"></script>
 <script src="app.js"></script>
 <script src="features.js"></script>

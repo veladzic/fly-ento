@@ -152,7 +152,7 @@ const COMPARE = {cols: ["Merkmal", "Eintagsfliegen", "Köcherfliegen", "Steinfli
       const items = g.sub.filter(s => !q || s.join(" ").toLowerCase().includes(q) || g.de.toLowerCase().includes(q));
       if (!items.length) return "";
       n += items.length;
-      return `<div class="sp-group"><button type="button" class="sp-h" data-open="${g.id}">${esc2(g.de)} <span class="mono">${esc2(g.lat)}</span></button><ul class="subs">${items.map(s => `<li><div><i class="mono">${esc2(s[0])}</i><b>${esc2(s[1])}</b></div><span>${esc2(s[2])}</span></li>`).join("")}</ul></div>`;
+      return `<div class="sp-group"><button type="button" class="sp-h" data-open="${g.id}">${esc2(g.de)} <span class="mono">${esc2(g.lat)}</span></button><ul class="subs">${items.map(subLi).join("")}</ul></div>`;
     }).join("");
     $("#species-" + key).innerHTML = html || `<p class="empty">Keine Art gefunden.</p>`;
   }
@@ -166,7 +166,7 @@ const COMPARE = {cols: ["Merkmal", "Eintagsfliegen", "Köcherfliegen", "Steinfli
   document.addEventListener("input", e => { const t = e.target.closest("[data-species]"); if (t) drawSpecies(t.dataset.species, t.value); });
   ["mayfly", "caddis", "stone"].forEach(key => {
     const el = document.getElementById("tab-" + key);
-    el.addEventListener("click", e => { const b = e.target.closest("[data-open]"); if (b) openGroup(b.dataset.open); const r = e.target.closest("tr[data-g]"); if (r) openGroup(r.dataset.g); });
+    el.addEventListener("click", e => { const b = e.target.closest("[data-open]"); if (b) openGroup(b.dataset.open); const r = e.target.closest("tr[data-g]"); if (r) openGroup(r.dataset.g); const f = e.target.closest(".sfig"); if (f) lightbox(f); });
   });
   // Die großen Drei auf der Startseite
   const big = $("#big3");
