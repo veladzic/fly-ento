@@ -20,8 +20,8 @@ function toast(t) {
 const GROUPS = [
   {k: "water", t: "Am Wasser", short: "Am Wasser", d: "Was fressen die Fische gerade? Bedingungen, Haken, Vorfach und Bestimmung.",
    tabs: [["now", "Jetzt am Wasser"], ["cond", "Bedingungen & Tipps"], ["tip", "Haken & Vorfach"], ["key", "Bestimmung"]]},
-  {k: "ins", t: "Insekten nachschlagen", short: "Insekten", d: "Alle Gruppen, Untergruppen, Saison, Verbreitung und Lebenszyklen.",
-   tabs: [["tree", "Organigramm"], ["cal", "Schlupfkalender"], ["map", "Weltkarte"], ["life", "Lebenszyklen"]]},
+  {k: "ins", t: "Insekten nachschlagen", short: "Insekten", d: "Eintags-, Köcher- und Steinfliegen im Detail, alle Gruppen, Saison und Verbreitung.",
+   tabs: [["tree", "Organigramm"], ["mayfly", "Eintagsfliegen"], ["caddis", "Köcherfliegen"], ["stone", "Steinfliegen"], ["cal", "Schlupfkalender"], ["map", "Weltkarte"], ["life", "Lebenszyklen"]]},
   {k: "tie", t: "Binden & Box", short: "Binden & Box", d: "Binderezepte, deine Fliegenbox, das Fangbuch und die Starter-Box.",
    tabs: [["rec", "Binderezepte"], ["box", "Meine Box & Fangbuch"], ["starter", "Starter-Box"]]}
 ];

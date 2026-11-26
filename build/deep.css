@@ -1,0 +1,49 @@
+
+/* ===================== Tiefenseiten (Eintags-, Köcher-, Steinfliegen) ===================== */
+.deep{display:flex;flex-direction:column;gap:6px}
+.deep-head{display:grid;grid-template-columns:120px 1fr;gap:18px;align-items:center;margin-bottom:6px}
+.deep-head img{width:120px;height:120px;border-radius:16px;object-fit:cover;border:3px solid var(--ac,var(--water))}
+.deep-head h2{margin:0;font-size:32px;letter-spacing:-.01em}.deep-head p{margin:2px 0}
+.deep-head .lead2{font-size:16.5px;color:var(--soft);max-width:760px;margin-top:6px}
+.facts{margin:10px 0}
+.deep .sub{margin:26px 0 10px;font-size:20px}
+.stagebar{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-bottom:12px}
+.stagebar button{min-height:44px;padding:0 18px;border:1px solid var(--border);background:#fff;border-radius:999px;font-weight:700;font-size:15px;cursor:pointer}
+.stagebar button[aria-selected=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.stagebar .arr{color:var(--line);font-size:18px}
+.stage-card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:18px 20px}
+.st-h{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:6px}.st-h h3{margin:0;font-size:24px}
+.st-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+.stage-card h4{margin:12px 0 6px;font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.stage-card ul{margin:0;padding-left:20px;font-size:14.5px}.stage-card p{margin:0 0 8px;font-size:14.5px}
+.st-fish{background:var(--water-tint);border-radius:14px;padding:4px 16px 14px}
+.st-fish .tiles{margin:8px 0}
+.stpics{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.stpics figure{margin:0;width:160px;height:120px;border-radius:12px;overflow:hidden;background:#fff;border:1px solid var(--border)}
+.stpics img{width:100%;height:100%;object-fit:cover;display:block}
+.pill.plain{cursor:default}
+.dgroups{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:10px}
+.dg{display:grid;grid-template-columns:72px 1fr;gap:12px;text-align:left;background:#fff;border:1px solid var(--border);border-radius:14px;padding:10px;cursor:pointer;align-items:center}
+.dg:hover{border-color:var(--water)}
+.dg img{width:72px;height:72px;border-radius:10px;object-fit:cover}
+.dg div{display:flex;flex-direction:column;gap:2px;min-width:0}.dg b{font-size:15.5px}.dg i{font-size:11.5px;color:var(--muted);font-style:normal}.dg span{font-size:12.5px;color:var(--soft)}
+.secbar.mini{margin:4px 0 0;gap:2px}.secbar.mini i{height:8px;border-radius:2px}
+.species{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:12px;align-items:start}
+.sp-group{background:#fff;border:1px solid var(--border);border-radius:14px;padding:10px 14px}
+.sp-h{background:none;border:0;padding:4px 0 6px;font-weight:700;font-size:15px;cursor:pointer;text-align:left;color:var(--water)}
+.sp-h .mono{font-size:11.5px;color:var(--muted);font-weight:400}
+.mistakes{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.h2s{margin:6px 0 10px;font-size:22px}
+.big3{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-bottom:18px}
+.b3{display:grid;grid-template-columns:84px 1fr;gap:14px;align-items:center;text-align:left;background:#fff;border:1px solid var(--border);border-radius:16px;padding:10px 14px 10px 10px;cursor:pointer}
+.b3:hover{border-color:var(--water);background:var(--water-tint)}
+.b3 img{width:84px;height:84px;border-radius:12px;object-fit:cover}
+.b3 span{display:flex;flex-direction:column;gap:2px}.b3 b{font-size:19px}.b3 i{font-size:12px;color:var(--muted);font-style:normal}.b3 em{font-size:13px;color:var(--soft);font-style:normal}
+@media (max-width:900px){.st-grid{grid-template-columns:1fr}}
+@media (max-width:700px){
+  .deep-head{grid-template-columns:72px 1fr;gap:12px}.deep-head img{width:72px;height:72px}.deep-head h2{font-size:26px}
+  .stagebar{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;padding-bottom:4px}.stagebar button{white-space:nowrap;flex:none}
+  .species,.dgroups{grid-template-columns:1fr}
+  .stpics figure{width:calc(50% - 4px)}
+  .stage-card{padding:14px}
+}
