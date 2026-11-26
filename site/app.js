@@ -10,20 +10,20 @@ const curBranch = g => g.branch;
 
 /* ========== Navigation ========== */
 const GROUPS = [
-  {k: "water", t: "Am Wasser", d: "Was fressen die Fische gerade? Bedingungen, Haken, Vorfach und Bestimmung.",
+  {k: "water", t: "Am Wasser", short: "Am Wasser", d: "Was fressen die Fische gerade? Bedingungen, Haken, Vorfach und Bestimmung.",
    tabs: [["now", "Jetzt am Wasser"], ["cond", "Bedingungen & Tipps"], ["tip", "Haken & Vorfach"], ["key", "Bestimmung"]]},
-  {k: "ins", t: "Insekten nachschlagen", d: "Alle Gruppen, Untergruppen, Saison, Verbreitung und Lebenszyklen.",
+  {k: "ins", t: "Insekten nachschlagen", short: "Insekten", d: "Alle Gruppen, Untergruppen, Saison, Verbreitung und Lebenszyklen.",
    tabs: [["tree", "Organigramm"], ["cal", "Schlupfkalender"], ["map", "Weltkarte"], ["life", "Lebenszyklen"]]},
-  {k: "tie", t: "Binden & Box", d: "Binderezepte, deine Fliegenbox, das Fangbuch und die Starter-Box.",
+  {k: "tie", t: "Binden & Box", short: "Binden & Box", d: "Binderezepte, deine Fliegenbox, das Fangbuch und die Starter-Box.",
    tabs: [["rec", "Binderezepte"], ["box", "Meine Box & Fangbuch"], ["starter", "Starter-Box"]]}
 ];
 const TAB_GROUP = {}; GROUPS.forEach(g => g.tabs.forEach(([id]) => TAB_GROUP[id] = g));
 const lastTab = {};
-$("#tabs").innerHTML = GROUPS.map(g => `<button role="tab" data-group="${g.k}" aria-selected="false">${esc(g.t)}</button>`).join("");
+$("#tabs").innerHTML = `<button role="tab" data-group="home" class="mob-only" aria-selected="false">Start</button>` + GROUPS.map(g => `<button role="tab" data-group="${g.k}" aria-selected="false">${esc(g.short || g.t)}</button>`).join("");
 function showTab(id) {
   if (!document.getElementById("tab-" + id)) id = "home";
   const g = TAB_GROUP[id];
-  $$("#tabs button").forEach(b => b.setAttribute("aria-selected", !!g && b.dataset.group === g.k));
+  $$("#tabs button").forEach(b => b.setAttribute("aria-selected", g ? b.dataset.group === g.k : b.dataset.group === "home"));
   const sn = $("#subnav"); sn.classList.toggle("hidden", !g);
   if (g) { lastTab[g.k] = id; sn.innerHTML = g.tabs.map(([i, t]) => `<button role="tab" data-tab="${i}" aria-selected="${i === id}">${esc(t)}</button>`).join(""); }
   $$(".panel-sec").forEach(s => s.classList.toggle("hidden", s.id !== "tab-" + id));
@@ -32,7 +32,7 @@ function showTab(id) {
   history.replaceState(null, "", "#" + id);
   window.scrollTo({top: 0});
 }
-$("#tabs").addEventListener("click", e => { const b = e.target.closest("button"); if (b) { const g = GROUPS.find(x => x.k === b.dataset.group); showTab(lastTab[g.k] || g.tabs[0][0]); } });
+$("#tabs").addEventListener("click", e => { const b = e.target.closest("button"); if (b) { if (b.dataset.group === "home") return showTab("home"); const g = GROUPS.find(x => x.k === b.dataset.group); showTab(lastTab[g.k] || g.tabs[0][0]); } });
 $("#subnav").addEventListener("click", e => { const b = e.target.closest("button"); if (b) showTab(b.dataset.tab); });
 document.addEventListener("click", e => { const b = e.target.closest("[data-go]"); if (b) showTab(b.dataset.go); });
 $(".brand").addEventListener("click", e => { e.preventDefault(); showTab("home"); });
@@ -348,7 +348,7 @@ function renderKey() {
   if (last.startsWith("R:")) return renderResult(last);
   const node = NODES[keyState.mode][last];
   const crumbs = keyState.labels.map(p => `<span>${esc(p)}</span>`).join("");
-  $("#keyBox").innerHTML = `${crumbs ? `<div class="crumbs">${crumbs}</div>` : ""}<h3>${esc(node.q)}</h3><p class="q-sub">${esc(node.sub || "")}</p>
+  $("#keyBox").innerHTML = `<div class="stepn mono">Schritt ${keyState.labels.length + 1}</div>${crumbs ? `<div class="crumbs">${crumbs}</div>` : ""}<h3>${esc(node.q)}</h3><p class="q-sub">${esc(node.sub || "")}</p>
   <div class="opts">${node.opts.map((o, i) => `<button class="opt" data-i="${i}"><b>${esc(o[0])}</b><span>${esc(o[1])}</span></button>`).join("")}</div>
   ${keyState.path.length > 1 ? `<div class="keybtns"><button class="btn" id="keyBack">← Zurück</button><button class="btn" id="keyReset">Neu starten</button></div>` : ""}`;
 }
@@ -372,19 +372,6 @@ renderKey();
 
 /* ========== Praxis ========== */
 const HOOKS = {4:[18,"Streamer, Salmonfly, große Wiesenheuschrecke"],6:[15,"große Steinfliege, Maikäfer, Grünes Heupferd"],8:[12,"Großer Hopper, Libellenlarve, Maifliege"],10:[10,"Köcherfliege, Schnake, Ephemera"],12:[8,"Sedge, Märzfliege, Hopper klein"],14:[6.5,"Kriecher-Eintagsfliege, Marienkäfer, Köcherfliege"],16:[5,"Baetis, Ameise, Blattlaus groß"],18:[4,"kleine Baetis, Fliegende Ameise, Kriebelmücke"],20:[3,"Caenis, kleine Zuckmücke, Trico"],22:[2.5,"Mikro-Köcher, Midge-Emerger"],24:[2,"Trico, Zuckmücke"],26:[1.5,"Winz-Caenis, Midge-Adult"]};
-function hookSvg(size, scale) {
-  const w = Math.max(18, 150 / (size * .45 + 1)), h = w * 1.5;
-  return `<svg width="${w}" height="${h}" viewBox="0 0 40 60" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"><path d="M10 6v34c0 11 6 16 14 16 9 0 12-7 12-14v-6"/><circle cx="10" cy="6" r="2.5" fill="currentColor"/></svg>`;
-}
-function renderHook() {
-  const v = +$("#hookRange").value; $("#hookVal").textContent = "#" + v;
-  const [mm, ex] = HOOKS[v];
-  const matches = ALL.filter(g => v >= Math.min(...g.hook) && v <= Math.max(...g.hook));
-  $("#hookInfo").innerHTML = `Ungefähre Körperlänge der Imitation: <b>~${mm} mm</b><br>Typisch für: ${esc(ex)}<br><b>${matches.length} Gruppen</b> passen in diese Größe, z. B. ${esc(matches.slice(0, 6).map(g => g.de).join(", "))}${matches.length > 6 ? " …" : "."}`;
-  $("#hookVis").innerHTML = Object.keys(HOOKS).map(Number).sort((a, b) => b - a).map(s => `<div class="hk${s === v ? " cur" : ""}">${hookSvg(s)}<span>#${s}</span></div>`).join("");
-}
-$("#hookRange").addEventListener("input", renderHook);
-renderHook();
 $("#hookTable").innerHTML = `<thead><tr><th>Größe</th><th>Körperlänge ≈</th><th>Typische Beute</th></tr></thead><tbody>${Object.keys(HOOKS).map(Number).sort((a, b) => a - b).map(s => `<tr><td>#${s}</td><td>${HOOKS[s][0]} mm</td><td>${esc(HOOKS[s][1])}</td></tr>`).join("")}</tbody>`;
 $("#tips").innerHTML = [
   ["Wasser lesen", "Beobachte 10 Minuten, bevor du auswirfst: Gibt es Ringe (Steiger), Schwärme über dem Wasser, Insekten auf Steinen oder Spinnweben? Das sagt dir Ordnung und Stadium."],

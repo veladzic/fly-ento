@@ -27,38 +27,46 @@
   <div class="hero" id="start">
     <p class="eyebrow mono">Fly Fishing Entomology</p>
     <h1>Was frisst die Forelle?</h1>
-    <p class="lead">Insekten, Muster, Saison und Bedingungen an einem Ort: erst nachsehen, was gerade aktiv ist, dann Haken, Vorfach und Fliege wählen.</p>
-    <form class="homesearch" id="homeSearch" role="search">
-      <label class="sr" for="homeQ">Suche</label>
-      <input id="homeQ" type="search" placeholder="Insekt, Muster oder Gruppe suchen: Baetis, Hopper, Elk Hair Caddis …" autocomplete="off">
-      <button class="btn pri" type="submit">Suchen</button>
-    </form>
+    <p class="lead">Erst nachsehen, was gerade aktiv ist, dann Haken, Vorfach und Fliege wählen.</p>
+    <div class="hero-actions">
+      <button class="btn pri big" type="button" data-go="now">Jetzt am Wasser →</button>
+      <form class="homesearch" id="homeSearch" role="search">
+        <label class="sr" for="homeQ">Suche</label>
+        <input id="homeQ" type="search" placeholder="Insekt oder Muster suchen: Baetis, Hopper, Elk Hair Caddis …" autocomplete="off">
+        <button class="btn" type="submit">Suchen</button>
+      </form>
+    </div>
   </div>
   <div class="home-now"><h2>Jetzt aktiv im <span id="homeMonth"></span></h2>
     <div class="pillrow" id="homeActive"></div>
     <p class="hint">Hauptzeit in Mitteleuropa. <button class="linkbtn" data-go="now">Mit Wetter, Wassertemperatur und Tageszeit auswerten →</button></p></div>
+  <div class="quick" aria-label="Schnellzugriff">
+    <button class="qk" type="button" data-go="box"><b>Fang eintragen</b><span>Fangbuch</span></button>
+    <button class="qk" type="button" data-go="tip"><b>Tippet berechnen</b><span>Haken → Vorfach</span></button>
+    <button class="qk" type="button" data-go="key"><b>Tier bestimmen</b><span>Schritt für Schritt</span></button>
+    <button class="qk" type="button" data-go="rec"><b>Muster binden</b><span>Rezepte</span></button>
+  </div>
   <div class="home-cards" id="homeCards"></div>
   <ul class="stats" id="stats"></ul>
 </section>
 
 <!-- ===== Organigramm ===== -->
 <section class="panel-sec hidden" id="tab-tree" role="tabpanel">
-  <div class="toolbar">
-    <label class="sr" for="q">Suche</label>
-    <input id="q" type="search" placeholder="Suchen: Baetidae, Hopper, Caddis, Salmonfly …" autocomplete="off">
-    <div class="chips" id="branchFilter" role="group" aria-label="Bereich filtern">
+  <div class="filterbar">
+    <div class="fb-row"><label class="sr" for="q">Suche</label>
+      <input id="q" type="search" placeholder="Suchen: Baetidae, Hopper, Caddis, Salmonfly …" autocomplete="off">
+      <label class="sel"><span>Aktiv im</span><select id="monthSel"><option value="">alle Monate</option></select></label>
+      <label class="chk"><input type="checkbox" id="onlyActive"> nur aktive</label></div>
+    <div class="fb-row"><div class="chips" id="branchFilter" role="group" aria-label="Bereich filtern">
       <button class="chip-btn on" data-f="all">Alle</button>
       <button class="chip-btn" data-f="water">Wasserinsekten</button>
       <button class="chip-btn" data-f="land">Landinsekten</button>
-      <button class="chip-btn" data-f="other">Weitere Beute</button>
-    </div>
-    <label class="sel"><span>Aktiv im Monat</span>
-      <select id="monthSel"><option value="">alle</option></select></label>
-    <label class="chk"><input type="checkbox" id="onlyActive"> nur aktive</label>
-    <button class="btn" type="button" id="all">Alle aufklappen</button>
-    <button class="btn" type="button" id="none">Alle zuklappen</button>
+      <button class="chip-btn" data-f="other">Weitere Beute</button></div>
+      <span class="grow"></span>
+      <button class="btn sm2" type="button" id="all">Alle aufklappen</button>
+      <button class="btn sm2" type="button" id="none">Alle zuklappen</button></div>
   </div>
-  <details class="howto" open><summary>So liest du die Namen</summary>
+  <details class="howto"><summary>So liest du die Namen</summary>
     <div class="howto-in">
       <div><b>Fettgedruckter Name</b><span>Deutsche Angler-Bezeichnung der Gruppe (z. B. „Kriecher“). Sie beschreibt meist die Lebensweise der Larven.</span></div>
       <div><b>Familie</b><span>Der wissenschaftliche (lateinische) Name – weltweit eindeutig, z. B. <i>Ephemerellidae</i>.</span></div>
@@ -75,7 +83,7 @@
 
 <!-- ===== Karte ===== -->
 <section class="panel-sec hidden" id="tab-map" role="tabpanel">
-  <div class="sec-head"><h2>Wo kommen sie vor?</h2>
+  <div class="page-head"><h2>Wo kommen sie vor?</h2>
     <p>Verbreitung und Bedeutung für Fliegenfischer je Weltregion (0–3). Gruppe wählen, Region anklicken – oder umgekehrt.</p></div>
   <div class="map-grid">
     <div class="map-ctl">
@@ -97,24 +105,30 @@
 
 <!-- ===== Jetzt am Wasser ===== -->
 <section class="panel-sec hidden" id="tab-now" role="tabpanel">
-  <div class="sec-head"><h2>Jetzt am Wasser</h2>
-    <p>Gib die Bedingungen ein – du bekommst die wahrscheinlichsten Futtertiere, passende Hakengrößen und Muster. Die Bewertung nutzt Saison, Tageszeit, Gewässertyp, Wassertemperatur und Wetter.</p></div>
-  <form class="finder" id="finder" onsubmit="return false">
-    <label>Monat<select id="fMonth"></select></label>
-    <label>Halbkugel<select id="fHemi"><option value="N">Nord (Europa, Nordamerika)</option><option value="S">Süd (Neuseeland, Patagonien …)</option></select></label>
-    <label>Region<select id="fRegion"></select></label>
-    <label>Gewässer<select id="fWater"><option value="">egal</option><option value="Fließgewässer">Fluss / Bach</option><option value="Stillwasser">See / Teich</option></select></label>
-    <label>Tageszeit<select id="fTime"><option value="">egal</option><option value="morgen">Morgen</option><option value="mittag">Mittag</option><option value="nachmittag">Nachmittag</option><option value="abend">Abend</option><option value="nacht">Nacht / Dämmerung</option></select></label>
-    <label>Wetter<select id="fWeather"><option value="">egal</option><option value="sonnig">sonnig, warm</option><option value="bewoelkt">bewölkt</option><option value="regen">Regen / Nieselregen</option><option value="wind">windig</option></select></label>
-    <label class="wide">Wassertemperatur: <b id="fTempV">10 °C</b><input type="range" id="fTemp" min="0" max="25" step="1" value="10"></label>
-  </form>
-  <div class="now-sum" id="nowSum" aria-live="polite"></div>
-  <div class="now-grid" id="nowGrid"></div>
+  <div class="page-head"><h2>Jetzt am Wasser</h2><p>Bedingungen einstellen, Empfehlung ablesen.</p></div>
+  <div class="tool-grid">
+    <form class="panel finder" id="finder" onsubmit="return false">
+      <div class="panel-h"><h3>Bedingungen</h3><button class="linkbtn" type="button" id="fReset">zurücksetzen</button></div>
+      <div class="fld"><span class="fl">Gewässer</span>
+        <div class="seg" data-input="fWater"><button type="button" data-v="" class="on">egal</button><button type="button" data-v="Fließgewässer">Fluss / Bach</button><button type="button" data-v="Stillwasser">See</button></div><input type="hidden" id="fWater" value=""></div>
+      <div class="fld"><span class="fl">Tageszeit</span>
+        <div class="seg wrap" data-input="fTime"><button type="button" data-v="" class="on">egal</button><button type="button" data-v="morgen">Morgen</button><button type="button" data-v="mittag">Mittag</button><button type="button" data-v="nachmittag">Nachmittag</button><button type="button" data-v="abend">Abend</button><button type="button" data-v="nacht">Nacht</button></div><input type="hidden" id="fTime" value=""></div>
+      <div class="fld"><span class="fl">Wetter</span>
+        <div class="seg wrap" data-input="fWeather"><button type="button" data-v="" class="on">egal</button><button type="button" data-v="sonnig">Sonnig</button><button type="button" data-v="bewoelkt">Bewölkt</button><button type="button" data-v="regen">Regen</button><button type="button" data-v="wind">Wind</button></div><input type="hidden" id="fWeather" value=""></div>
+      <div class="fld"><span class="fl">Wassertemperatur <b id="fTempV">10 °C</b></span><input type="range" id="fTemp" min="0" max="25" step="1" value="10" aria-label="Wassertemperatur"></div>
+      <details class="more"><summary>Monat, Halbkugel, Region</summary>
+        <label class="fld"><span class="fl">Monat</span><select id="fMonth"></select></label>
+        <label class="fld"><span class="fl">Halbkugel</span><select id="fHemi"><option value="N">Nord (Europa, Nordamerika)</option><option value="S">Süd (Neuseeland, Patagonien …)</option></select></label>
+        <label class="fld"><span class="fl">Region</span><select id="fRegion"></select></label></details>
+      <button type="button" class="btn pri jump" data-scroll="nowSum">Empfehlung anzeigen ↓</button>
+    </form>
+    <div class="result" aria-live="polite"><div id="nowSum"></div><div id="nowGrid"></div></div>
+  </div>
 </section>
 
 <!-- ===== Kalender ===== -->
 <section class="panel-sec hidden" id="tab-cal" role="tabpanel">
-  <div class="sec-head"><h2>Schlupfkalender</h2>
+  <div class="page-head"><h2>Schlupfkalender</h2>
     <p>Wann ist welche Gruppe am Wasser aktiv? Basis: gemäßigte Breiten Mitteleuropas. Für die Südhalbkugel auf „Süd“ umschalten – die Saison verschiebt sich um ein halbes Jahr.</p></div>
   <div class="toolbar">
     <div class="chips" id="calHemi" role="group" aria-label="Halbkugel">
@@ -135,7 +149,7 @@
 
 <!-- ===== Lebenszyklen ===== -->
 <section class="panel-sec hidden" id="tab-life" role="tabpanel">
-  <div class="sec-head"><h2>Lebenszyklen &amp; Stadien</h2>
+  <div class="page-head"><h2>Lebenszyklen &amp; Stadien</h2>
     <p>Welche Stufe will der Fisch gerade? Die richtige Muster-Wahl hängt vom Entwicklungsstadium ab.</p></div>
   <div class="two-col">
     <div class="note"><h3>Unvollständige Verwandlung</h3>
@@ -150,8 +164,7 @@
 
 <!-- ===== Bestimmung ===== -->
 <section class="panel-sec hidden" id="tab-key" role="tabpanel">
-  <div class="sec-head"><h2>Bestimmungshilfe</h2>
-    <p>Du hast ein Tier in der Hand oder im Netz – welche Gruppe ist es? Antworte Schritt für Schritt.</p></div>
+  <div class="page-head"><h2>Bestimmungshilfe</h2><p>Du hast ein Tier in der Hand oder im Netz – welche Gruppe ist es?</p></div>
   <div class="chips" id="keyMode" role="group" aria-label="Bestimmungsart">
     <button class="chip-btn on" data-m="adult">Fliegendes Insekt (Adult)</button>
     <button class="chip-btn" data-m="larva">Larve / Nymphe im Wasser</button>
@@ -161,93 +174,90 @@
 
 <!-- ===== Binderezepte ===== -->
 <section class="panel-sec hidden" id="tab-rec" role="tabpanel">
-  <div class="sec-head"><h2>Binderezepte</h2>
-    <p>Die Klassiker, die fast alle Gruppen dieser Seite abdecken: Materialliste und Bindeschritte. Rezepte sind Standardvarianten und werden von Bindern oft abgewandelt.</p></div>
-  <div class="toolbar"><div class="chips" id="recFilter" role="group" aria-label="Muster-Typ"></div></div>
+  <div class="page-head"><h2>Binderezepte</h2><p>Die Klassiker für fast alle Gruppen. Karte aufklappen für Material und Bindeschritte. Standardvarianten, die Binder oft abwandeln.</p></div>
+  <div class="filterbar"><div class="fb-row"><label class="sr" for="recQ">Rezept suchen</label><input type="search" id="recQ" placeholder="Rezept oder Gruppe suchen …"><div class="chips" id="recFilter" role="group" aria-label="Muster-Typ"></div></div></div>
   <div class="rec-grid" id="recGrid"></div>
 </section>
 
 <!-- ===== Meine Box ===== -->
 <section class="panel-sec hidden" id="tab-box" role="tabpanel">
-  <div class="sec-head"><h2>Meine Fliegenbox &amp; Fangbuch</h2>
-    <p>Hake an, welche Muster du dabei hast, und führe ein Fangbuch. Alles bleibt in deinem Browser (nichts wird hochgeladen).</p></div>
-  <div class="box-grid">
-    <div class="boxcol">
-      <h3 class="sub nm">Fliegenbox</h3>
-      <div class="toolbar"><input type="search" id="boxQ" placeholder="Muster suchen …"><span class="hint" id="boxCount"></span></div>
-      <div class="chk-list" id="boxList"></div>
-    </div>
-    <div class="boxcol">
-      <h3 class="sub nm">Was fehlt für diesen Monat?</h3>
-      <label class="sel"><span>Monat</span><select id="boxMonth"></select></label>
-      <div id="boxMissing" class="missing"></div>
-      <h3 class="sub">Fang eintragen</h3>
-      <form class="logform" id="logForm">
-        <label>Datum<input type="date" id="lDate" required></label>
-        <label>Gewässer<input type="text" id="lWater" placeholder="z. B. Soča, Tolmin" required></label>
-        <label>Fisch<select id="lFish"><option>Bachforelle</option><option>Regenbogenforelle</option><option>Marmorata</option><option>Äsche</option><option>Saibling</option><option>Huchen</option><option>Döbel</option><option>Barbe</option><option>Hecht</option><option>Andere</option></select></label>
-        <label>Länge (cm)<input type="number" id="lLen" min="5" max="200"></label>
-        <label>Muster<input type="text" id="lFly" list="flyList" placeholder="z. B. Pheasant Tail" required><datalist id="flyList"></datalist></label>
-        <label>Haken #<input type="number" id="lHook" min="2" max="28" step="1"></label>
-        <label>Wasser °C<input type="number" id="lTemp" min="0" max="30" step="0.5"></label>
-        <label class="wide">Notiz<input type="text" id="lNote" placeholder="Schlupf, Tageszeit, Wetter …"></label>
+  <div class="page-head"><h2>Meine Box &amp; Fangbuch</h2><p>Alles bleibt in deinem Browser, nichts wird hochgeladen.</p></div>
+  <div class="seg lg" data-input="boxView"><button type="button" data-v="log" class="on">Fangbuch</button><button type="button" data-v="box">Fliegenbox</button><button type="button" data-v="miss">Was fehlt?</button></div><input type="hidden" id="boxView" value="log">
+
+  <div class="bx" id="bx-log">
+    <div class="log-stats" id="logStats"></div>
+    <div class="tool-grid log-grid">
+      <form class="panel logform" id="logForm">
+        <div class="panel-h"><h3>Fang eintragen</h3></div>
+        <div class="two"><label class="fld"><span class="fl">Datum</span><input type="date" id="lDate" required></label>
+        <label class="fld"><span class="fl">Gewässer</span><input type="text" id="lWater" placeholder="z. B. Soča, Tolmin" required></label></div>
+        <div class="two"><label class="fld"><span class="fl">Fisch</span><select id="lFish"><option>Bachforelle</option><option>Regenbogenforelle</option><option>Marmorata</option><option>Äsche</option><option>Saibling</option><option>Huchen</option><option>Döbel</option><option>Barbe</option><option>Hecht</option><option>Andere</option></select></label>
+        <label class="fld"><span class="fl">Länge (cm)</span><input type="number" id="lLen" min="5" max="200" inputmode="numeric"></label></div>
+        <label class="fld"><span class="fl">Muster</span><input type="text" id="lFly" list="flyList" placeholder="z. B. Pheasant Tail" required><datalist id="flyList"></datalist></label>
+        <div class="two"><label class="fld"><span class="fl">Haken #</span><input type="number" id="lHook" min="2" max="28" step="1" inputmode="numeric"></label>
+        <label class="fld"><span class="fl">Wasser °C</span><input type="number" id="lTemp" min="0" max="30" step="0.5" inputmode="decimal"></label></div>
+        <label class="fld"><span class="fl">Notiz</span><input type="text" id="lNote" placeholder="Schlupf, Tageszeit, Wetter …"></label>
         <button class="btn pri" type="submit">Eintragen</button>
       </form>
+      <div class="result"><div class="cal-wrap"><table class="cmp" id="logTable"></table></div>
+        <div class="btnrow"><button class="btn" id="logCsv" type="button">CSV exportieren</button><button class="btn" id="logJson" type="button">Sicherung (JSON)</button><label class="btn filebtn">Sicherung laden<input type="file" id="logLoad" accept="application/json" hidden></label><button class="btn danger" id="logClear" type="button">Fangbuch leeren</button></div>
+        <p class="hint" id="logMsg" aria-live="polite"></p></div>
     </div>
   </div>
-  <h3 class="sub">Fangbuch</h3>
-  <div class="log-stats" id="logStats"></div>
-  <div class="cal-wrap"><table class="cmp" id="logTable"></table></div>
-  <div class="toolbar"><button class="btn" id="logCsv" type="button">Als CSV exportieren</button><button class="btn" id="logJson" type="button">Sicherung (JSON)</button><label class="btn filebtn">Sicherung laden<input type="file" id="logLoad" accept="application/json" hidden></label><button class="btn danger" id="logClear" type="button">Fangbuch leeren</button></div>
-  <p class="hint" id="logMsg" aria-live="polite"></p>
+
+  <div class="bx hidden" id="bx-box">
+    <div class="filterbar"><div class="fb-row"><label class="sr" for="boxQ">Muster suchen</label><input type="search" id="boxQ" placeholder="Muster suchen …"><span class="hint" id="boxCount"></span></div></div>
+    <div id="boxList" class="boxlist"></div>
+  </div>
+
+  <div class="bx hidden" id="bx-miss">
+    <div class="filterbar"><div class="fb-row"><label class="sel"><span>Für den Monat</span><select id="boxMonth"></select></label><span class="hint">Hauptgruppen des Monats und deine Muster dazu.</span></div></div>
+    <div id="boxMissing" class="missing"></div>
+  </div>
 </section>
 
 <!-- ===== Haken & Vorfach ===== -->
 <section class="panel-sec hidden" id="tab-tip" role="tabpanel">
-  <div class="sec-head"><h2>Haken &amp; Vorfach</h2>
-    <p>Hakengröße wählen, passende Tippet-Stärke und Vorfachaufbau berechnen.</p></div>
-  <div class="hook-tool">
-    <div class="hook-ctl"><label for="hookRange" class="lbl">Hakengröße wählen: <b id="hookVal">#14</b></label>
-      <input id="hookRange" type="range" min="4" max="26" step="2" value="14" aria-describedby="hookInfo">
-      <div id="hookInfo" class="hookinfo"></div></div>
-    <div class="hook-vis" id="hookVis" aria-hidden="true"></div>
+  <div class="page-head"><h2>Haken &amp; Vorfach</h2><p>Hakengröße wählen – Tippet, Vorfachaufbau und passende Gruppen siehst du sofort.</p></div>
+  <div class="tool-grid">
+    <div class="panel" id="tipCalc">
+      <div class="panel-h"><h3>Eingabe</h3></div>
+      <div class="fld"><span class="fl">Hakengröße <b id="hookVal">#14</b></span>
+        <input type="range" id="tcHook" min="4" max="26" step="2" value="14" aria-label="Hakengröße"><div class="hookvis" id="hookVis" aria-label="Größen"></div></div>
+      <div class="fld"><span class="fl">Vorfachlänge <b id="tcLenV">2,7 m</b></span><input type="range" id="tcLen" min="1.5" max="5.5" step="0.1" value="2.7" aria-label="Vorfachlänge"></div>
+      <div class="fld"><span class="fl">Material</span>
+        <div class="seg" data-input="tcMat"><button type="button" data-v="ny" class="on">Nylon</button><button type="button" data-v="fc">Fluorocarbon</button></div><input type="hidden" id="tcMat" value="ny"></div>
+    </div>
+    <div class="result"><div class="tiles" id="tcTiles"></div><div id="leaderSvg"></div><div id="tcOut"></div></div>
   </div>
-  <h3 class="sub">Hakengrößen-Übersicht</h3>
-  <div class="cal-wrap"><table class="cmp" id="hookTable"></table></div>
-
-  <h3 class="sub">Hakengrößen-Übersicht</h3>
-  <div class="cal-wrap"><table class="cmp" id="hookTable"></table></div>
-  <h3 class="sub">Vorfach- &amp; Tippet-Rechner</h3>
-  <div class="calc" id="tipCalc">
-    <label>Hakengröße #<select id="tcHook"></select></label>
-    <label>Vorfachlänge (m)<input type="number" id="tcLen" min="1.5" max="7" step="0.1" value="2.7"></label>
-    <label>Material<select id="tcMat"><option value="ny">Nylon</option><option value="fc">Fluorocarbon</option></select></label>
-    <div class="calc-out" id="tcOut" aria-live="polite"></div>
-  </div>
-  <div class="cal-wrap"><table class="cmp" id="xTable"></table></div>
-
+  <details class="fold"><summary>Tabelle: Hakengrößen und typische Beute</summary><div class="cal-wrap"><table class="cmp" id="hookTable"></table></div></details>
+  <details class="fold"><summary>Tabelle: Tippet-Stärken (X)</summary><div class="cal-wrap"><table class="cmp" id="xTable"></table></div></details>
 </section>
 
 <!-- ===== Bedingungen & Tipps ===== -->
 <section class="panel-sec hidden" id="tab-cond" role="tabpanel">
-  <div class="sec-head"><h2>Bedingungen &amp; Tipps</h2>
-    <p>Wassertemperatur, Wasserfarbe und Wetter bestimmen, wie und womit du fischst.</p></div>
-  
-  <div class="calc" id="condCalc">
-    <label class="wide">Wassertemperatur: <b id="cdTempV">12 °C</b><input type="range" id="cdTemp" min="0" max="26" step="1" value="12"></label>
-    <label>Wasserfarbe<select id="cdColor"><option value="klar">klar</option><option value="leicht">leicht getrübt</option><option value="trueb">stark getrübt / Hochwasser</option></select></label>
-    <label>Wetter<select id="cdWx"><option value="">egal</option><option value="sonne">hell und sonnig</option><option value="bedeckt">bedeckt</option><option value="regen">Regen</option><option value="wind">windig</option></select></label>
-    <div class="calc-out" id="cdOut" aria-live="polite"></div>
+  <div class="page-head"><h2>Bedingungen &amp; Tipps</h2><p>Wassertemperatur, Wasserfarbe und Wetter bestimmen, wie und womit du fischst.</p></div>
+  <div class="tool-grid">
+    <div class="panel" id="condCalc">
+      <div class="panel-h"><h3>Bedingungen</h3></div>
+      <div class="fld"><span class="fl">Wassertemperatur <b id="cdTempV">12 °C</b></span>
+        <input type="range" id="cdTemp" min="0" max="26" step="1" value="12" aria-label="Wassertemperatur">
+        <div class="gauge" aria-hidden="true"><i style="width:15.4%" class="z bad"></i><i style="width:15.4%" class="z warn"></i><i style="width:30.8%" class="z good"></i><i style="width:15.4%" class="z warn"></i><i style="width:23%" class="z bad"></i><span class="mk" id="cdMk"></span></div>
+        <div class="gauge-l" aria-hidden="true"><span>0</span><span>8</span><span>16</span><span>26 °C</span></div></div>
+      <div class="fld"><span class="fl">Wasserfarbe</span>
+        <div class="seg" data-input="cdColor"><button type="button" data-v="klar" class="on">klar</button><button type="button" data-v="leicht">getrübt</button><button type="button" data-v="trueb">Hochwasser</button></div><input type="hidden" id="cdColor" value="klar"></div>
+      <div class="fld"><span class="fl">Wetter</span>
+        <div class="seg wrap" data-input="cdWx"><button type="button" data-v="" class="on">egal</button><button type="button" data-v="sonne">Sonne</button><button type="button" data-v="bedeckt">Bedeckt</button><button type="button" data-v="regen">Regen</button><button type="button" data-v="wind">Wind</button></div><input type="hidden" id="cdWx" value=""></div>
+      <button type="button" class="btn pri jump" data-scroll="cdOut">Ergebnis anzeigen ↓</button>
+    </div>
+    <div class="result" id="cdOut" aria-live="polite"></div>
   </div>
-
-  <h3 class="sub">Vorgehen am Wasser: 8 Grundregeln</h3>
-  <div class="tips" id="tips"></div>
-
+  <details class="fold"><summary>Vorgehen am Wasser: 8 Grundregeln</summary><div class="tips" id="tips"></div></details>
 </section>
 
 <!-- ===== Starter-Box ===== -->
 <section class="panel-sec hidden" id="tab-starter" role="tabpanel">
-  <div class="sec-head"><h2>Starter-Box</h2>
+  <div class="page-head"><h2>Starter-Box</h2>
     <p>12 Muster, die an fast jedem Wasser etwas fangen. Klick auf ein Muster zeigt die passende Gruppe; im Reiter „Binderezepte“ findest du die Rezepte.</p></div>
   
   <div class="starter" id="starter"></div>
