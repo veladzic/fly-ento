@@ -19,7 +19,7 @@ function toast(t) {
 /* ========== Navigation ========== */
 const GROUPS = [
   {k: "water", t: "Am Wasser", short: "Am Wasser", d: "Was fressen die Fische gerade? Bedingungen, Haken, Vorfach und Bestimmung.",
-   tabs: [["now", "Jetzt am Wasser"], ["cond", "Bedingungen & Tipps"], ["tip", "Haken & Vorfach"], ["tech", "Technik"], ["read", "Gewässer lesen"], ["key", "Bestimmung"]]},
+   tabs: [["now", "Jetzt am Wasser"], ["cond", "Bedingungen & Tipps"], ["tip", "Haken & Vorfach"], ["tech", "Technik"], ["rivers", "Gewässer-Profile"], ["read", "Gewässer lesen"], ["key", "Bestimmung"]]},
   {k: "ins", t: "Insekten nachschlagen", short: "Insekten", d: "Eintags-, Köcher- und Steinfliegen im Detail, alle Gruppen, Saison und Verbreitung.",
    tabs: [["tree", "Organigramm"], ["mayfly", "Eintagsfliegen"], ["caddis", "Köcherfliegen"], ["stone", "Steinfliegen"], ["cal", "Schlupfkalender"], ["map", "Weltkarte"], ["life", "Lebenszyklen"], ["gloss", "Glossar"]]},
   {k: "tie", t: "Binden & Box", short: "Binden & Box", d: "Binderezepte, deine Fliegenbox, das Fangbuch und die Starter-Box.",

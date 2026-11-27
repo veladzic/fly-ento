@@ -31,6 +31,7 @@ jobs:
           node --check site/features.js
           node --check site/deep.js
           node --check site/wissen.js
+          node --check site/profile.js
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
