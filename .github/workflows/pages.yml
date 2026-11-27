@@ -30,6 +30,7 @@ jobs:
           node --check site/app.js
           node --check site/features.js
           node --check site/deep.js
+          node --check site/wissen.js
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
