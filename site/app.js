@@ -80,11 +80,19 @@ function pics(g, alt = true) {
   const flyPic = g.fly ? `<figure class="fly"><img loading="lazy" src="${photo(g.fly)}" alt="${esc(g.flyName)} – Fliegenmuster"><figcaption class="mono">Umpqua: ${esc(g.flyName)}</figcaption></figure>` : "";
   return `<div class="pics${g.fly ? "" : " single"}"><figure><img loading="lazy" src="${photo(g.img)}" alt="${esc(g.de)} – Insekt"><figcaption class="mono">Insekt</figcaption></figure>${flyPic}</div>`;
 }
+
+/* Untergruppen-Fotos als Streifen auf der Gruppenkarte */
+const subThumbs = g => {
+  const withPic = typeof SUBPHOTO !== "undefined" ? g.sub.filter(s => SUBPHOTO[s[0]]) : [];
+  if (!withPic.length) return "";
+  return `<div class="subthumbs"><span class="stl">Untergruppen</span>${withPic.slice(0, 5).map(s => `<button type="button" class="sth" data-open="${g.id}" title="${esc(s[1])} (${esc(s[0])})"><img loading="lazy" src="${photo(SUBPHOTO[s[0]].f)}" alt="${esc(s[1])}"></button>`).join("")}${g.sub.length > withPic.slice(0, 5).length ? `<span class="more-n">+${g.sub.length - withPic.slice(0, 5).length}</span>` : ""}</div>`;
+};
 function groupCard(g) {
   const flies = g.flies.join(", ") + (g.flyName && !g.flies.some(f => f.toLowerCase() === g.flyName.toLowerCase()) ? " · Foto: " + g.flyName : "");
   const search = [g.orderDe, g.de, g.en, g.lat, flies, g.info, g.tip, g.day, g.water, ...g.sub.map(s => s.join(" "))].join(" ").toLowerCase();
   return `<article class="group" data-gid="${g.id}" data-search="${esc(search)}">
   ${pics(g)}
+  ${subThumbs(g)}
   <div class="gbody"><h3>${esc(g.de)}</h3>${nameLines(g)}
   <p>${esc(g.info.length > 150 ? g.info.slice(0, g.info.lastIndexOf(" ", 150)) + " …" : g.info)}</p>
   <div class="chiprow"><span class="chip mono">Haken ${esc(hookTxt(g))}</span><span class="chip mono act">${esc(g.water)}</span>${g.sub.length ? `<span class="chip mono">${g.sub.length} Untergruppen</span>` : ""}</div>
