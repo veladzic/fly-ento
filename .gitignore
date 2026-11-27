@@ -4,3 +4,6 @@ Insekten_Organigramm_Fliegenfischer.html
 .claude/
 __pycache__/
 Entomologie_Fliegenfischer.html
+
+build/sheets/
+build/*.log

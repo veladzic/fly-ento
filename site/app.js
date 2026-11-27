@@ -172,15 +172,18 @@ $("#tree").addEventListener("click", e => {
 
 /* Untergruppen-Eintrag mit Foto (Wikipedia/Commons) */
 const subLi = s => { const p = typeof SUBPHOTO !== "undefined" ? SUBPHOTO[s[0]] : null;
-  return `<li${p ? ' class="has-pic"' : ""}>${p ? `<figure class="sfig"><img loading="lazy" src="${photo(p.f)}" alt="${esc(s[0])}" data-credit="${esc(p.p || "")}" data-page="${esc(p.t || "")}"></figure>` : ""}<div class="sbody"><div><i class="mono">${esc(s[0])}</i><b>${esc(s[1])}</b></div><span>${esc(s[2])}</span></div></li>`; };
+  return `<li${p ? ' class="has-pic"' : ""}>${p ? `<figure class="sfig"><img loading="lazy" src="${photo(p.f)}" alt="${esc(s[0])}" data-credit="${esc(p.p || "")}" data-page="${esc(p.t || "")}" data-by="${esc(p.b || "")}" data-lic="${esc(p.l || "")}"></figure>` : ""}<div class="sbody"><div><i class="mono">${esc(s[0])}</i><b>${esc(s[1])}</b></div><span>${esc(s[2])}</span></div></li>`; };
 
 /* ========== Dialog ========== */
 function lightbox(fig) {
   const i = $("img", fig), lb = $("#lb");
   $("img", lb).src = i.src; $("img", lb).alt = i.alt;
   const cap = $("p", lb), cr = i.dataset.credit;
-  cap.textContent = i.alt + (i.dataset.page ? " · Wikipedia-Seite: " + i.dataset.page : "");
-  if (cr) { cap.append(" · Foto: "); const l = document.createElement("a"); l.href = cr; l.target = "_blank"; l.rel = "noopener"; l.textContent = "Wikipedia / Commons"; l.style.color = "#fff"; l.addEventListener("click", ev => ev.stopPropagation()); cap.appendChild(l); }
+  const by = i.dataset.by, lic = i.dataset.lic;
+  cap.textContent = i.alt + (by ? "" : (i.dataset.page ? " · Wikipedia-Seite: " + i.dataset.page : ""));
+  if (by) cap.append(" · Foto: " + by + (lic ? " (" + lic + ")" : "") + " · ");
+  else if (cr) cap.append(" · Foto: ");
+  if (cr) { const l = document.createElement("a"); l.href = cr; l.target = "_blank"; l.rel = "noopener"; l.textContent = by ? "GBIF" : "Wikipedia / Commons"; l.style.color = "#fff"; l.addEventListener("click", ev => ev.stopPropagation()); cap.appendChild(l); }
   lb.classList.add("on");
 }
 $("#lb").addEventListener("click", () => $("#lb").classList.remove("on"));

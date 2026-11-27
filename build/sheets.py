@@ -7,7 +7,11 @@ FOT = os.path.join(H, '..', 'site', 'fotos')
 OUT = os.path.join(H, 'sheets'); os.makedirs(OUT, exist_ok=True)
 cache = json.load(open(os.path.join(H, 'subphotos_cache.json'), encoding='utf8'))
 from subfilter import keep, rejected
-items = [(k, v) for k, v in cache.items() if keep(k, v) and k not in rejected() and os.path.exists(os.path.join(FOT, v['f']))]
+if len(sys.argv) > 1 and sys.argv[1] == 'gbif':
+    gb = json.load(open(os.path.join(H, 'gbif_cache.json'), encoding='utf8'))
+    items = [(k, {'f': v['f'], 't': v['gn'] or '', 'd': 'Foto: ' + v['by']}) for k, v in gb.items() if v and os.path.exists(os.path.join(FOT, v['f']))]
+else:
+    items = [(k, v) for k, v in cache.items() if keep(k, v) and k not in rejected() and os.path.exists(os.path.join(FOT, v['f']))]
 try: font = ImageFont.truetype('arial.ttf', 15); fs = ImageFont.truetype('arial.ttf', 12)
 except Exception: font = fs = ImageFont.load_default()
 COLS, ROWS, TW, TH, CAP = 4, 4, 300, 190, 54

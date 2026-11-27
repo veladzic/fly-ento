@@ -8,8 +8,8 @@ used=set(re.findall(r'"((?:ins|fly|sub)_[a-z0-9\-_]+\.jpg)"',js+open(S+'deep.js'
 img={f:'data:image/jpeg;base64,'+base64.b64encode(open(S+'fotos/'+f,'rb').read()).decode() for f in sorted(used)}
 app=app.replace('const photo = f => "fotos/" + f;','const photo = f => __IMG[f];')
 pre='const __IMG='+json.dumps(img,separators=(',',':'))+';\n'
-html=html.replace('<link rel="stylesheet" href="style.css?v=5">','<style>\n'+css+'\n</style>')
-html=re.sub(r'<script src="data\.js\?v=5"></script>\s*<script src="data_extra\.js\?v=5"></script>\s*<script src="subphotos\.js\?v=5"></script>\s*<script src="mapdata\.js\?v=5"></script>\s*<script src="app\.js\?v=5"></script>\s*<script src="features\.js\?v=5"></script>\s*<script src="deep\.js\?v=5"></script>',lambda m:'<script>\n'+pre+js+app+'\n</script>',html)
+html=html.replace('<link rel="stylesheet" href="style.css?v=6">','<style>\n'+css+'\n</style>')
+html=re.sub(r'<script src="data\.js\?v=6"></script>\s*<script src="data_extra\.js\?v=6"></script>\s*<script src="subphotos\.js\?v=6"></script>\s*<script src="mapdata\.js\?v=6"></script>\s*<script src="app\.js\?v=6"></script>\s*<script src="features\.js\?v=6"></script>\s*<script src="deep\.js\?v=6"></script>',lambda m:'<script>\n'+pre+js+app+'\n</script>',html)
 out='../Entomologie_Fliegenfischer.html'
 open(out,'w',encoding='utf8').write(html)
 print(len(img),'imgs',os.path.getsize(out)//1024,'KB')
