@@ -10,7 +10,7 @@ mayfly: {
     {k: "ei", t: "Ei", when: "Sommer bis Herbst", look: ["Winzig, in Klumpen oder Streifen", "Sinkt auf den Grund"],
      behavior: "Die Weibchen lassen die Eier im Flug fallen, tauchen den Hinterleib ein oder setzen sich aufs Wasser. Danach sterben sie, der Spinnerfall beginnt. Je nach Art schlüpfen die Larven nach Wochen oder erst nach einer Ruhephase.",
      fish: {how: "Nicht direkt befischbar. Der Eiablageflug kündigt den Spinnerfall an: Beobachte die tanzenden Schwärme am Ufer.", depth: "–", flies: [], hook: "–"}, pics: []},
-    {k: "nymph", t: "Nymphe", when: "ganzjährig, 1–2 Jahre", look: ["3 (selten 2) Schwanzfäden", "Kiemenblättchen seitlich am Hinterleib", "Nur 1 Kralle pro Fuß", "Flügelscheiden auf dem Rücken"],
+    {k: "nymph", t: "Nymphe", when: "ganzjährig, 1–2 Jahre", look: ["Meist 3 Schwanzfäden (bei manchen Arten 2 oder ein stark verkürzter mittlerer)", "Kiemenblättchen seitlich am Hinterleib", "Nur 1 Kralle pro Fuß", "Flügelscheiden auf dem Rücken"],
      behavior: "Die Nymphe lebt am Grund, zwischen Steinen, Pflanzen oder im Sediment. Je nach Lebensweise unterscheidet man Schwimmer, Kriecher, Klammerer und Grabende (siehe Tabelle unten). Vor dem Schlupf wird sie unruhig und driftet.",
      fish: {how: "Dead Drift knapp über dem Grund, Dropper unter einer Trockenfliege, bei Schlupf höher im Wasser.", depth: "Grundnah bis Mittelwasser", flies: ["Pheasant Tail Nymph", "Gold Ribbed Hare’s Ear"], hook: "#12–18"}, pics: ["ins_ephemerellidae.jpg", "fly_schwimmer.jpg", "fly_kriecher.jpg"]},
     {k: "aufstieg", t: "Aufstieg & Emerger", when: "Beginn des Schlupfs", look: ["Haut platzt im Film oder knapp darunter", "Ein Teil steckt noch in der Nymphenhaut"],
@@ -20,7 +20,7 @@ mayfly: {
      behavior: "Der Dun treibt Sekunden bis Minuten flugunfähig und fliegt dann zur Ufervegetation, wo er sich zum Spinner häutet. Baetis schlüpft oft mittags, Kriecher und Grabende abends.",
      fish: {how: "Trockenfliege dragfrei, Parachute oder Comparadun. Auf gezielt steigende Einzelfische anspielen. Feines Tippet (5X–6X).", depth: "Oberfläche", flies: ["Adams", "Parachute BWO", "Comparadun"], hook: "#12–20"}, pics: ["ins_ephemeroptera.jpg", "fly_sumpfeintagsfliegen.jpg"]},
     {k: "spinner", t: "Spinner (Imago)", when: "Abend und Morgen", look: ["Glänzender Körper, klare Flügel", "Sehr lange Schwanzfäden", "Nach der Eiablage: Flügel flach im Film (spent)"],
-     behavior: "Spinner paaren sich im Tanzflug über Wasser oder Ufer, die Weibchen legen Eier und fallen erschöpft aufs Wasser. Der Spinnerfall ist oft intensiver als der Schlupf. Die Fische steigen dabei sanft und gleichmäßig („sipping“).",
+     behavior: "Spinner paaren sich im Tanzflug über Wasser oder Ufer, die Weibchen legen Eier und fallen erschöpft aufs Wasser. Der Spinnerfall ist oft ebenso wichtig wie der Schlupf. Die Fische steigen dabei sanft und gleichmäßig („sipping“).",
      fish: {how: "Spent-Spinner flach im Film, möglichst nah an die Fische anspielen. Wenn Duns verschmäht werden, aber viele leise Ringe auftreten: Spinnerfall!", depth: "Oberfläche", flies: ["CDC Spent Spinner", "Rusty Spinner"], hook: "#14–22"}, pics: ["ins_caenidae.jpg", "fly_kleine-weisse.jpg"]}
   ],
   types: {title: "Nymphen-Typen", cols: ["Typ", "Körperform", "Lebensraum", "Familien", "Muster"], rows: [
@@ -36,13 +36,13 @@ caddis: {
   facts: [["Verwandlung", "vollständig: Larve → Puppe → Adult"], ["Larvenzeit", "meist 1 Jahr"], ["Adulte", "bis zu mehreren Wochen"], ["Schwanzfäden", "keine"], ["Haken", "#8–22"], ["Hauptsaison", "April–Oktober, Spitze Juni–September"]],
   stages: [
     {k: "ei", t: "Ei", when: "Sommer bis Herbst", look: ["In Gallertpaketen", "An Steinen oder Pflanzen"],
-     behavior: "Die Weibchen tauchen zur Eiablage teils bis zum Grund, laufen unter Wasser oder lassen die Eier aus der Luft fallen. Beim Abtauchen trägt eine Luftschicht die Weibchen wie ein silbernes Blasenkleid.",
+     behavior: "Die Weibchen tauchen zur Eiablage teils bis zum Grund, laufen unter Wasser oder lassen die Eier aus der Luft fallen. Einige Arten tauchen dafür unter, getragen von einer silbrigen Luftschicht. Die Eiablage verläuft meist verstreuter als ein Spinnerfall bei Eintagsfliegen.",
      fish: {how: "Nicht direkt befischbar. Beobachte tauchende oder skatende Weibchen: dann ist die Eiablage in vollem Gang.", depth: "–", flies: [], hook: "–"}, pics: []},
     {k: "larve", t: "Larve", when: "ganzjährig", look: ["Raupenartig, 3 Beinpaare vorn", "Kleine Haken am Hinterende", "Oft in einem Köcher aus Steinchen, Sand, Holz oder Pflanzen"],
      behavior: "Köcherbauer ziehen ihr Gehäuse mit sich, Netzbauer spinnen Fangnetze in der Strömung, freilebende Larven jagen räuberisch ohne Köcher. Bei Hochwasser und Schlupf-Drift werden viele Larven abgespült.",
      fish: {how: "Dead Drift am Grund (Czech Nymph, Euronymphe), bei Köcherlarven auch langsam am Grund führen.", depth: "Grundnah", flies: ["Peeping Caddis", "Czech Nymph", "Green Caddis Larva"], hook: "#8–16"}, pics: ["ins_limnephilidae.jpg", "fly_kocherbauer.jpg", "fly_freilebende.jpg"]},
     {k: "puppe", t: "Puppe & Aufstieg", when: "vor dem Schlupf", look: ["Ruderbeine zum Schwimmen", "Flügelscheiden und lange Fühler", "Oft von Luftbläschen glänzend"],
-     behavior: "Im verschlossenen Köcher oder Kokon verpuppt sich die Larve. Die reife Puppe schneidet sich frei, steigt schnell zur Oberfläche und wird dabei von Fischen gejagt. An der Oberfläche platzt die Haut, und das Adult schlüpft in Sekunden.",
+     behavior: "Im verschlossenen Köcher oder Kokon verpuppt sich die Larve. Die reife Puppe schneidet sich frei und driftet oft minutenlang am Grund, bevor sie, getragen von Luftbläschen, zur Oberfläche aufsteigt. Dabei und im Film ist sie besonders gefährdet. An der Oberfläche platzt die Haut, und das Adult schlüpft in Sekunden.",
      fish: {how: "Puppenmuster in Aufstiegsstrecken: schwingen lassen und am Ende leicht anheben (Lift). Dropper unter Trockenfliege.", depth: "Mittelwasser bis Film", flies: ["Sparkle Pupa", "Partridge & Orange", "Impostor Pupa"], hook: "#12–18"}, pics: ["fly_netzbauer.jpg"]},
     {k: "adult", t: "Adult", when: "Abend bis Nacht", look: ["Flügel dachförmig, behaart", "Sehr lange Fühler", "Keine Schwanzfäden"],
      behavior: "Die Adulten laufen und flattern über die Oberfläche („skitten“). Das provoziert wilde Bisse. Tagsüber sitzen sie in der Ufervegetation, abends und nachts fliegen die Weibchen zur Eiablage aufs Wasser. Viele Arten sind nachtaktiv.",
@@ -83,7 +83,7 @@ stone: {
 };
 
 const COMPARE = {cols: ["Merkmal", "Eintagsfliegen", "Köcherfliegen", "Steinfliegen"], rows: [
-  ["Larve / Nymphe", "3 Schwanzfäden, Kiemen seitlich, 1 Kralle", "Raupenartig, Haken am Hinterende, oft im Köcher", "2 Schwanzfäden, flach, 2 Krallen"],
+  ["Larve / Nymphe", "Meist 3 Schwanzfäden, Kiemen seitlich, 1 Kralle pro Fuß", "Raupenartig, keine Schwanzfäden, Nachschieber mit Haken am Hinterende, oft im Köcher", "2 Schwanzfäden, flach, 2 Krallen pro Fuß"],
   ["Puppe", "keine", "ja, im Köcher oder Kokon", "keine"],
   ["Flügel in Ruhe", "aufrecht wie Segel", "dachförmig, behaart", "flach auf dem Rücken"],
   ["Schwanzfäden (Adult)", "2–3, sehr lang", "keine", "2, kurz"],
